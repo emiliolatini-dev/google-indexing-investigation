@@ -25,6 +25,7 @@ Write substantive statements with inline badges, e.g.:
 
   **[FACT · F-012]** ... → see [E-021](../evidence/http/README.md#e-021)
   **[OBSERVATION · O-007]** ...
+  **[ASSUMPTION · A-002]** ... *(unproven premise)*
   **[HYPOTHESIS · H-003]** ... *(to be verified)*
   **[QUESTION · Q-005]** ...
 
@@ -38,6 +39,17 @@ Reference IDs; never paste raw data here.
 ## Related open questions
 
 <!-- Bullet list of Q-IDs connected to this chapter. -->
+
+## Confidence Assessment
+
+<!--
+MANDATORY. Reflects the quality and completeness of the evidence, not subjective
+certainty. State one level — High | Medium | Low | Insufficient — followed by a
+short justification against provenance, reproducibility, corroboration, and
+completeness. See methodology §8.
+-->
+
+**Level: <High | Medium | Low | Insufficient>.** <one short paragraph of justification>
 
 ## Chapter changelog
 

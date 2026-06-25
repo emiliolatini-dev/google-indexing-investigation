@@ -11,6 +11,8 @@ new evidence item and mark the old one "superseded". See CONTRIBUTING.md §4.
 
 - **Date collected:** YYYY-MM-DD
 - **Category:** http | robots-sitemap | gsc | rendering | crawl | network | screenshots
+- **Provenance:** primary | secondary | derived  (see methodology §1.6)
+- **Derived from:** <E- id(s) this was built from, or "n/a (primary)">
 - **File(s):** `E-NNN_YYYY-MM-DD_<category>_<short-description>.<ext>`
 - **What it demonstrates:** <one neutral sentence; no interpretation>
 - **Collection method / tool:** <e.g. curl, browser devtools, GSC export>

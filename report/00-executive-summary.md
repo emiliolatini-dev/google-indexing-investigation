@@ -27,6 +27,11 @@ _None yet._
 
 _None yet._
 
+## Confidence Assessment
+
+**Level: Insufficient.** No content authored yet; this chapter contains no
+evidentiary claims to assess.
+
 ## Chapter changelog
 
 | Date | Version | Change | Author |

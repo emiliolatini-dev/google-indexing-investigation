@@ -34,6 +34,8 @@ Example: `E-021_2026-06-25_http_product-url-headers.txt`
 - Self-describing: record how, with what tool, and when it was collected.
 - Reproducible: include the exact command where possible.
 - No sensitive data (tokens, internal IPs, credentials). Anonymize procedures.
+- Provenance: every item records whether it is **primary**, **secondary**, or
+  **derived** (see [methodology §1.6](../report/02-methodology.md#16-evidence-quality-provenance)).
 
 ## Master index
 

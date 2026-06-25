@@ -21,6 +21,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 ### Added
 - Repository scaffolding: folder structure, indices, templates, and empty
   registry files. No investigation content yet.
+- Methodology framework (report chapter 02, v1.0): evidence lifecycle, claim
+  classification, traceability rules, review workflow with adversarial review,
+  experiment documentation standard, privacy/redaction policy, and
+  reproducibility standard. Added `templates/experiment.md`.
+- Framework hardening (chapter 02 → v1.1): `INVESTIGATION_PRINCIPLES.md` (root);
+  ASSUMPTION (`A-`) category with `registry/assumptions.md`; evidence provenance
+  (primary/secondary/derived, §1.6); per-chapter Confidence Assessment standard
+  (§8) added to all chapters and the chapter template.
+
+### Changed
+- `CONTRIBUTING.md` and `GLOSSARY.md` now reference chapter 02 as the canonical
+  source for concept definitions, removing conceptual duplication.
+- Cross-document consistency pass: README, CONTRIBUTING, GLOSSARY, methodology,
+  and templates aligned on identical terminology and the `F-/O-/A-/H-/Q-/E-`
+  identifier set.
+
+### Removed
+- The experiment `T-` identifier namespace. Experiments are procedures tracked
+  through the `E-`/`O-`/`H-` items they produce.
 
 ---
 

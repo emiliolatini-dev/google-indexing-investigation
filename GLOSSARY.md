@@ -11,16 +11,37 @@ and referenced elsewhere to avoid ambiguity and duplication. Definitions describ
 
 ## Epistemic categories
 
-- **FACT** — A demonstrated observation, backed by at least one evidence item.
-- **OBSERVATION** — An observed behavior, backed by at least one evidence item.
-- **HYPOTHESIS** — A possible explanation not yet verified; must be labeled as such.
+> Canonical definitions: [report/02-methodology.md §2](report/02-methodology.md#2-claim-classification).
+> The lines below are quick-reference summaries.
+
+- **FACT** — A demonstrated statement that follows directly from evidence; backed by ≥1 evidence item.
+- **OBSERVATION** — A recorded behavior in a specific instance, asserting no cause; backed by ≥1 evidence item.
+- **ASSUMPTION** — An unproven premise accepted to proceed, made explicit and stating what would falsify it.
+- **HYPOTHESIS** — A possible explanation not yet verified; provisional and labeled as such.
 - **QUESTION** — An open question with no claim implied.
 
 ## Identifiers
 
-- **F-NNN / O-NNN / H-NNN / Q-NNN / E-NNN** — Stable identifiers for facts,
-  observations, hypotheses, questions, and evidence. See
-  [README §Identifier system](README.md#identifier-system).
+- **F-NNN / O-NNN / A-NNN / H-NNN / Q-NNN / E-NNN** — Stable identifiers for
+  facts, observations, assumptions, hypotheses, questions, and evidence. See
+  [README §Identifier system](README.md#identifier-system). Experiments are
+  procedures and have no identifier.
+
+## Evidence provenance
+
+> Canonical: [report/02-methodology.md §1.6](report/02-methodology.md#16-evidence-quality-provenance).
+
+- **Primary** — A direct observation or original artifact, captured without interpretation.
+- **Secondary** — Derived directly from primary evidence without interpretation (faithful extract/reformat).
+- **Derived** — The product of analysis, aggregation, or visualization based on primary/secondary evidence.
+
+## Confidence levels
+
+> Canonical: [report/02-methodology.md §8](report/02-methodology.md#8-confidence-assessment).
+> Confidence refers to the quality and completeness of evidence, not subjective certainty.
+
+- **High** · **Medium** · **Low** · **Insufficient** — bounded by provenance mix,
+  reproducibility, corroboration, and completeness.
 
 ## Indexing & crawling terms
 

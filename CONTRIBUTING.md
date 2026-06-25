@@ -8,6 +8,11 @@ artifact that any reader can independently reconstruct.
 
 ## 1. Epistemic rules (non-negotiable)
 
+> Canonical definitions of the categories and the traceability rules live in
+> [report/02-methodology.md](report/02-methodology.md) (§2–§3). The table below is
+> a quick-reference for contributors; if it ever diverges, the methodology chapter
+> wins.
+
 Every substantive statement must belong to exactly one category and be labeled
 accordingly:
 
@@ -15,6 +20,7 @@ accordingly:
 |----------|--------------|-------------|
 | **FACT** | `[FACT · F-NNN]` | Must cite at least one evidence ID (`E-NNN`). |
 | **OBSERVATION** | `[OBSERVATION · O-NNN]` | Must cite at least one evidence ID (`E-NNN`). |
+| **ASSUMPTION** | `[ASSUMPTION · A-NNN]` | Unproven premise made explicit; states what would falsify it. Marked *(unproven premise)*. |
 | **HYPOTHESIS** | `[HYPOTHESIS · H-NNN]` | Must list supporting **and** falsifying evidence. Always marked *(to be verified)*. |
 | **QUESTION** | `[QUESTION · Q-NNN]` | An open question; no claim implied. |
 
@@ -35,12 +41,16 @@ Hard rules:
 |------|--------|-----------|------------|
 | Fact | `F-` | zero-padded, 3 digits (`F-001`) | [`registry/claims.md`](registry/claims.md) |
 | Observation | `O-` | `O-001` | [`registry/claims.md`](registry/claims.md) |
+| Assumption | `A-` | `A-001` | [`registry/assumptions.md`](registry/assumptions.md) |
 | Hypothesis | `H-` | `H-001` | [`registry/hypotheses.md`](registry/hypotheses.md) |
 | Question | `Q-` | `Q-001` | [`registry/questions.md`](registry/questions.md) |
 | Evidence | `E-` | `E-001` | [`evidence/`](evidence/) indices |
 
 - IDs are **stable**: once assigned, never reused or renumbered.
 - A retired item is marked `superseded` or `rejected`, never deleted from the registry.
+- **Experiments have no identifier** — they are procedures, tracked through the
+  `E-`/`O-`/`H-` items they produce (see
+  [methodology §5](report/02-methodology.md#5-experiment-documentation)).
 
 ---
 
@@ -100,13 +110,16 @@ outcome).
 Before moving an item to `stable`, confirm:
 
 - [ ] Every FACT and OBSERVATION cites at least one evidence ID.
-- [ ] No hypothesis is presented as a fact.
+- [ ] No hypothesis is presented as a fact; no assumption is presented as a fact.
 - [ ] Every hypothesis lists both supporting and falsifying evidence.
+- [ ] Every load-bearing assumption is explicit and states what would falsify it.
+- [ ] Every evidence item records its provenance (primary/secondary/derived).
 - [ ] Tone is neutral and non-accusatory.
 - [ ] No duplicated content; cross-references used instead.
 - [ ] No sensitive data committed.
-- [ ] All referenced `E-`/`F-`/`O-`/`H-`/`Q-` IDs resolve to an existing entry.
+- [ ] All referenced `E-`/`F-`/`O-`/`A-`/`H-`/`Q-` IDs resolve to an existing entry.
 - [ ] Chapter header (status/version/depends-on) is up to date.
+- [ ] Chapter ends with a Confidence Assessment consistent with its evidence.
 
 ---
 
@@ -121,3 +134,15 @@ Before moving an item to `stable`, confirm:
 
 Prefix commits by area: `evidence:`, `report:`, `registry:`, `docs:`, `data:`,
 `chore:`. Example: `report: draft methodology chapter (02)`.
+
+---
+
+## 8. Templates
+
+Reusable forms live in [`templates/`](templates/):
+
+- [`report-chapter.md`](templates/report-chapter.md) — new report chapter skeleton.
+- [`evidence-entry.md`](templates/evidence-entry.md) — evidence index entry.
+- [`hypothesis.md`](templates/hypothesis.md) — hypothesis registry entry.
+- [`experiment.md`](templates/experiment.md) — test/experiment record (see
+  [methodology §5](report/02-methodology.md#5-experiment-documentation)).
