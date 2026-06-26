@@ -1,0 +1,36 @@
+[
+  {
+    "session": "bocca-serriola-20-06-2026",
+    "locality": "bocca-serriola",
+    "date": "2026-06-20",
+    "patch_active": false,
+    "t0_published_at": null,
+    "t1_sitemap_ok_at": null,
+    "t1_sitemap_check_status": null,
+    "t1_products_count": null,
+    "t1_rank_math_flush": false,
+    "t2_google_sitemap_first_seen": "2026-06-24T00:00:00Z",
+    "t3_google_landing_first_seen": "2026-06-21T15:50:00Z",
+    "t4_google_product_first_seen": "2026-06-21T18:49:00Z",
+    "t5_gsc_indexed_at": null,
+    "t5_gsc_indexed_confirmed": false,
+    "notes": "Pre-patch. Pipeline di crawl completa e coerente (landing -> prodotto -> immagini). Vedi F-010, E-010. t2 e' la data del giorno log, ora esatta da raffinare."
+  },
+  {
+    "session": "bocca-serriola-21-06-2026",
+    "locality": "bocca-serriola",
+    "date": "2026-06-21",
+    "patch_active": false,
+    "t0_published_at": null,
+    "t1_sitemap_ok_at": null,
+    "t1_sitemap_check_status": null,
+    "t1_products_count": null,
+    "t1_rank_math_flush": false,
+    "t2_google_sitemap_first_seen": "2026-06-24T00:00:00Z",
+    "t3_google_landing_first_seen": "2026-06-26T11:16:29Z",
+    "t4_google_product_first_seen": null,
+    "t5_gsc_indexed_at": null,
+    "t5_gsc_indexed_confirmed": false,
+    "notes": "Pre-patch. Nessun crawl spontaneo osservato nei log disponibili prima della richiesta manuale GSC del 26/06. Il primo GET della landing (t3) coincide con la richiesta manuale. Vedi F-010, E-011, O-004, O-005."
+  }
+]

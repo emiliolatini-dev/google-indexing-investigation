@@ -18,6 +18,54 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/).
 
 ## [Unreleased]
 
+### Added — Observatory
+- Nuova directory `observatory/`: componente predittiva del progetto, dataset vivo
+  separato dall'indagine storica (`evidence/` immutabile, `report/` interpretativo).
+- `observatory/session-observatory.json`: dataset una-entry-per-sessione con
+  timeline T0→T5 (pubblicazione → sitemap OK → Google legge sitemap → crawl landing
+  → crawl primo prodotto → indicizzazione GSC). Seed storico pre-patch: sessioni
+  20-06-2026 e 21-06-2026 con dati ricostruiti dai log; campi non noti come `null`.
+- `observatory/schema.json`: JSON Schema (draft 2020-12) per validazione delle entry;
+  campo chiave `patch_active` per il confronto PRE vs POST patch.
+- `tools/publish-session-spec.md`: specifica del comando `wp83 fotomoto
+  publish-session` (import → repair → generate-json → flush → sitemap-check →
+  report JSON). Implementazione nel repo del mu-plugin; qui solo la spec di
+  riferimento e il mapping report → observatory.
+
+### Added — Investigation
+- F-008: `lastmod` Rank Math coerente con `wp_posts.post_modified` — pista chiusa.
+- F-009: Googlebot ha eseguito GET delle sitemap il 24/06/2026 durante il periodo
+  in cui le sitemap erano stale (dimostrato dall'indagine).
+- F-010: confronto crawl pipeline sessione 20-06-2026 (completa) vs sessione
+  21-06-2026 (nessun crawl spontaneo osservato nei log disponibili).
+- F-011: pipeline post-patch validata in produzione (`sitemap-check.sh` 8 PASS / 0 FAIL).
+- O-001–O-005: osservazioni operative su cache drift, pipeline WP-CLI, flush,
+  richieste GSC.
+- E-008–E-012: evidenze crawl log (LiteSpeed), DB query, output script.
+- H-002, H-003, H-004: aggiunte come `rejected` con evidenza falsificante.
+- Q-001a: sotto-domanda operativa di Q-001 — "Google ha aggiornato la crawl queue
+  su snapshot sitemap incompleto?"
+- Q-002: domanda aperta sull'esperimento T-002 (crawl spontaneo entro 24h post-patch).
+- T-002: protocollo esperimento controllato prossima sessione, timeline T0→T7
+  (in attesa di esecuzione).
+
+### Changed
+- H-001: status aggiornato da `supported` a `supported (rafforzata)` — E-009
+  dimostra che Googlebot ha letto le sitemap stale in modo verificabile.
+- Q-001: mantenuta aperta; nota rafforzata con riferimento a F-009 e F-010.
+- report/05-tests-performed.md → v0.3: aggiunto T-002, referenced evidence
+  aggiornato, open questions aggiornate, confidence assessment aggiornato.
+- registry/decision-log.md: aggiunti pivot investigativo e approvazione T-002.
+
+### Closed hypotheses
+- H-004 (lastmod errato): falsificata da F-008/E-008.
+- H-002 (prodotti non pubblicati): falsificata da F-001/F-002/F-003.
+- H-003 (canonical/schema errati): falsificata da F-002/F-003.
+
+---
+
+## [Unreleased — scaffolding]
+
 ### Added
 - Repository scaffolding: folder structure, indices, templates, and empty
   registry files. No investigation content yet.

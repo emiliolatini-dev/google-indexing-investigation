@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fotomoto.click/schemas/session-observatory.json",
+  "title": "Session Observatory",
+  "description": "Dataset vivo: una entry per sessione fotografica. Traccia la timeline T0->T5 dalla pubblicazione all'indicizzazione Google. Campi null = evento non ancora osservato (distinto da assenza di evento).",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "session",
+      "locality",
+      "date",
+      "patch_active",
+      "t0_published_at",
+      "t1_sitemap_ok_at",
+      "t1_sitemap_check_status",
+      "t1_products_count",
+      "t1_rank_math_flush",
+      "t2_google_sitemap_first_seen",
+      "t3_google_landing_first_seen",
+      "t4_google_product_first_seen",
+      "t5_gsc_indexed_at",
+      "t5_gsc_indexed_confirmed",
+      "notes"
+    ],
+    "properties": {
+      "session": {
+        "type": "string",
+        "description": "Slug univoco della sessione, es. bocca-serriola-28-06-2026."
+      },
+      "locality": {
+        "type": "string",
+        "description": "Localita della sessione, es. bocca-serriola."
+      },
+      "date": {
+        "type": "string",
+        "format": "date",
+        "description": "Data della sessione (YYYY-MM-DD)."
+      },
+      "patch_active": {
+        "type": "boolean",
+        "description": "true se la patch di invalidazione automatica cache Rank Math era attiva al momento della pubblicazione. Campo chiave per il confronto PRE vs POST PATCH."
+      },
+      "t0_published_at": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "T0 - timestamp UTC di pubblicazione della sessione."
+      },
+      "t1_sitemap_ok_at": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "T1 - timestamp UTC in cui sitemap-check.sh ha restituito PASS."
+      },
+      "t1_sitemap_check_status": {
+        "type": ["string", "null"],
+        "enum": ["PASS", "FAIL", null],
+        "description": "Esito di sitemap-check.sh."
+      },
+      "t1_products_count": {
+        "type": ["integer", "null"],
+        "minimum": 0,
+        "description": "Numero di prodotti pubblicati nella sessione."
+      },
+      "t1_rank_math_flush": {
+        "type": "boolean",
+        "description": "true se il flush automatico cache Rank Math e' stato eseguito."
+      },
+      "t2_google_sitemap_first_seen": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "T2 - primo GET Googlebot di product-sitemap1.xml o sitemap_index.xml (da log LiteSpeed)."
+      },
+      "t3_google_landing_first_seen": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "T3 - primo GET Googlebot della landing sessione (da log LiteSpeed)."
+      },
+      "t4_google_product_first_seen": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "T4 - primo GET Googlebot di un URL prodotto della sessione (da log LiteSpeed)."
+      },
+      "t5_gsc_indexed_at": {
+        "type": ["string", "null"],
+        "format": "date-time",
+        "description": "T5 - timestamp UTC in cui GSC ha confermato la landing come 'On Google'."
+      },
+      "t5_gsc_indexed_confirmed": {
+        "type": "boolean",
+        "description": "true se GSC ha confermato l'indicizzazione della landing."
+      },
+      "notes": {
+        "type": "string",
+        "description": "Note neutre. Riferimenti a F-/O-/E-/H-/Q- dove pertinente. Nessuna conclusione oltre l'evidenza."
+      }
+    }
+  }
+}
