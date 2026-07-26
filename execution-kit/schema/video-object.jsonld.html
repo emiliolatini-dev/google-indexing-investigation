@@ -1,0 +1,29 @@
+<!--
+  VideoObject per i 12 video (oggi marcati solo come Product → nessun video rich result).
+  Rif. master audit §2.4, §12.2 punto 5. Azione roadmap 15.
+  Emettere sulla pagina prodotto video, IN AGGIUNTA (non in sostituzione) allo schema Product/Offer.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Video moto {{loc_nome}} — {{data_leggibile}} ore {{ora}}",
+  "description": "Video slow-motion del passaggio in moto a {{loc_nome}} il {{data_leggibile}}. Ripresa originale di FotoMoto.Click.",
+  "thumbnailUrl": ["{{url_thumbnail}}"],
+  "uploadDate": "{{data_iso}}T{{ora}}:00+02:00",
+  "duration": "PT{{secondi}}S",
+  "contentUrl": "{{url_video_mp4}}",
+  "embedUrl": "{{url_embed}}",
+  "creator": { "@id": "https://fotomoto.click/#emilio-latini" },
+  "copyrightHolder": { "@id": "https://fotomoto.click/#organization" },
+  "contentLocation": { "@type": "Place", "name": "{{loc_nome}}" },
+  "regionsAllowed": "IT",
+  "offers": {
+    "@type": "Offer",
+    "price": "15.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": "{{url_pagina_prodotto_video}}"
+  }
+}
+</script>

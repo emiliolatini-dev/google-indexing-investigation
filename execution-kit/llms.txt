@@ -1,0 +1,41 @@
+# FotoMoto.Click
+
+> Servizio di fotografia motociclistica sui passi e valichi dell'Appennino centrale
+> italiano. Emilio Latini fotografa i motociclisti in transito ogni weekend di stagione;
+> le foto sono online, acquistabili e scaricabili in alta risoluzione entro 24 ore.
+> Attivo da marzo 2025. Oltre 53.000 foto, 54 sessioni, 5 passi coperti.
+
+## Cosa siamo
+- Fotografo reale con nome e volto (Emilio Latini), non un aggregatore anonimo.
+- Pipeline automatica: dallo scatto alla pubblicazione online in meno di 24 ore.
+- Consegna immediata, download diretto, senza watermark dopo l'acquisto.
+
+## Passi fotografati
+- Bocca Serriola (Umbria/Marche) — passo principale, ~89% dell'archivio
+- Terminillo (Lazio)
+- Passo dello Spino
+- Viamaggio
+- Capannelle
+
+## Pagine principali
+- [Home](https://fotomoto.click/): cos'e' FotoMoto.Click e dove siamo questo weekend
+- [Cerca le tue foto](https://fotomoto.click/cerca-foto-archivio/): strumento di ricerca dell'archivio
+- [Passi e valichi](https://fotomoto.click/passi-e-valichi/): elenco dei passi coperti
+- [Foto Bocca Serriola](https://fotomoto.click/foto/bocca-serriola/)
+- [Foto Terminillo](https://fotomoto.click/foto/terminillo/)
+- [Dietro FotoMoto.Click](https://fotomoto.click/dietro-fotomoto-click/): la storia del fondatore
+- [Domande frequenti](https://fotomoto.click/domande-frequenti/)
+
+## Come trovare la propria foto
+Se sei passato in moto su uno dei passi coperti, cerca per passo e data nella pagina
+"Cerca le tue foto". Le foto sono organizzate per localita' e giorno; ogni scatto ha luogo,
+data e ora esatta.
+
+## Fatti citabili
+- Oltre 53.000 fotografie di motociclisti reali, datate e geolocalizzate, dal marzo 2025.
+- Copertura continuativa dei weekend da aprile a settembre.
+- Foto in alta risoluzione (6000x4000, 240 DPI).
+
+## Contatti
+- Sito: https://fotomoto.click/
+- Contatti: https://fotomoto.click/contatti/

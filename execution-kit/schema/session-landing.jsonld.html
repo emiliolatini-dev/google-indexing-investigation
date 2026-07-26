@@ -1,0 +1,73 @@
+<!--
+  Schema landing sessione: trasforma una pagina oggi VUOTA in un'entita' ricca.
+  Rif. master audit §12.1 (riga /foto/{loc}/{data}/ manca Event, ItemList, ImageObject, Place)
+  e roadmap azione 20/21.
+  Template server-side: i {{...}} sono variabili da popolare dalla pipeline (gia' possiedi
+  passo, data, ora di scatto, conteggio foto). Emettere nel <head> della landing sessione.
+
+  Nota curated indexing (§3.1 opzione B): l'ItemList elenca SOLO le 20-40 foto scelte come
+  indicizzabili con caption unica; le altre restano noindex e fuori da questo elenco.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Event",
+      "@id": "https://fotomoto.click/foto/{{loc_slug}}/{{data_slug}}/#event",
+      "name": "Foto moto {{loc_nome}} — {{data_leggibile}}",
+      "startDate": "{{data_iso}}T08:00:00+02:00",
+      "endDate": "{{data_iso}}T19:00:00+02:00",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "location": {
+        "@type": "Place",
+        "name": "{{loc_nome}}",
+        "address": { "@type": "PostalAddress", "addressCountry": "IT", "addressRegion": "{{regione}}" },
+        "geo": { "@type": "GeoCoordinates", "latitude": {{lat}}, "longitude": {{lon}} }
+      },
+      "organizer": { "@id": "https://fotomoto.click/#organization" },
+      "performer": { "@id": "https://fotomoto.click/#emilio-latini" },
+      "about": "Sessione fotografica dei motociclisti in transito su {{loc_nome}} il {{data_leggibile}}. {{n_foto}} foto disponibili.",
+      "image": "{{url_foto_copertina}}"
+    },
+    {
+      "@type": "ImageGallery",
+      "@id": "https://fotomoto.click/foto/{{loc_slug}}/{{data_slug}}/#gallery",
+      "name": "Galleria {{loc_nome}} {{data_leggibile}}",
+      "isPartOf": { "@id": "https://fotomoto.click/foto/{{loc_slug}}/{{data_slug}}/#event" },
+      "mainEntity": {
+        "@type": "ItemList",
+        "numberOfItems": {{n_foto_indicizzabili}},
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "url": "https://fotomoto.click/foto/{{loc_slug}}/{{slug_foto_1}}/"
+          }
+          /* ...ripetere per le 20-40 foto curate scelte come indicizzabili... */
+        ]
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://fotomoto.click/" },
+        { "@type": "ListItem", "position": 2, "name": "Passi e valichi", "item": "https://fotomoto.click/passi-e-valichi/" },
+        { "@type": "ListItem", "position": 3, "name": "{{loc_nome}}", "item": "https://fotomoto.click/foto/{{loc_slug}}/" },
+        { "@type": "ListItem", "position": 4, "name": "{{data_leggibile}}", "item": "https://fotomoto.click/foto/{{loc_slug}}/{{data_slug}}/" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!--
+  DA FARE anche in HTML (non solo schema) sulla stessa pagina, altrimenti resta "vuota":
+   - <h1>Foto moto {{loc_nome}} {{data_leggibile}}</h1>
+   - 150-250 parole data-driven: "{{n_foto}} moto fotografate tra le {{prima_ora}} e le {{ultima_ora}};
+     orario di punta {{ora_punta}}." (numeri dal tuo archivio — §13.2)
+   - selettore fascia oraria server-side con URL propri (es. /15-16/) — §9.1
+   - <meta name="description"> corretto (oggi e' "Foto del {{data}} |", pipe orfana — §2.3)
+   - le 20-40 foto indicizzabili come veri <a href> nell'HTML iniziale (non solo infinite-scroll AJAX)
+-->

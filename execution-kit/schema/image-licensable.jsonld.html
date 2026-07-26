@@ -1,0 +1,37 @@
+<!--
+  ImageObject "Licenziabile" — abilita il badge "Licensable" + link "Ottieni immagine" in Google Images.
+  Rif. master audit §12.2 punto 1 e §13.3. Azione roadmap 22 (alzata a P0 dai dati: 29 clic
+  da Google Immagini in 3 mesi su tutto il sito).
+  Emettere per OGNI foto indicizzabile, dentro/accanto allo schema Product della pagina prodotto.
+  Deve essere accompagnato dai metadati IPTC nel file (vedi execution-kit/13-iptc-pipeline.md):
+  i due canali (schema + IPTC) vanno tenuti coerenti.
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "@id": "{{url_pagina_prodotto}}#photo",
+  "contentUrl": "{{url_immagine_webp}}",
+  "thumbnailUrl": "{{url_thumbnail}}",
+  "name": "Moto {{modello_o_generico}} a {{loc_nome}} — {{data_leggibile}} ore {{ora}}",
+  "caption": "Motociclista fotografato a {{loc_nome}} il {{data_leggibile}} alle {{ora}}. Scatto originale di Emilio Latini / FotoMoto.Click.",
+  "creator": { "@id": "https://fotomoto.click/#emilio-latini" },
+  "copyrightNotice": "© {{anno}} Emilio Latini — FotoMoto.Click. Tutti i diritti riservati.",
+  "creditText": "FotoMoto.Click",
+  "copyrightHolder": { "@id": "https://fotomoto.click/#organization" },
+  "license": "https://fotomoto.click/licenza-immagini/",
+  "acquireLicensePage": "{{url_pagina_prodotto}}",
+  "contentLocation": {
+    "@type": "Place",
+    "name": "{{loc_nome}}",
+    "geo": { "@type": "GeoCoordinates", "latitude": {{lat}}, "longitude": {{lon}} }
+  },
+  "dateCreated": "{{data_iso}}T{{ora}}:00+02:00"
+}
+</script>
+
+<!--
+  Prerequisito: creare la pagina /licenza-immagini/ (termini di licenza) a cui punta "license".
+  acquireLicensePage = la pagina prodotto dove si compra quella specifica foto.
+  Verifica dopo il deploy: Google Rich Results Test + Search Console → Google Immagini.
+-->

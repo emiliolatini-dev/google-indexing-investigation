@@ -1,0 +1,69 @@
+<!--
+  Schema E-E-A-T: Person (Emilio Latini) + Organization con founder/author.
+  Rif. master audit §8, §12.2. Inserire nel <head> di OGNI pagina (o via mu-plugin globale).
+  SOSTITUIRE i placeholder <...> con i valori reali (LinkedIn, P.IVA, indirizzo, telefono).
+  Gli @id sono stabili e riusabili come riferimento da altri schemi (ImageObject.creator, ecc.).
+-->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://fotomoto.click/#emilio-latini",
+      "name": "Emilio Latini",
+      "givenName": "Emilio",
+      "familyName": "Latini",
+      "jobTitle": "Fotografo e fondatore",
+      "worksFor": { "@id": "https://fotomoto.click/#organization" },
+      "founder": { "@id": "https://fotomoto.click/#organization" },
+      "image": "https://fotomoto.click/wp-content/uploads/emilio-latini-fondatore-fotomoto-click.webp",
+      "url": "https://fotomoto.click/dietro-fotomoto-click/",
+      "knowsAbout": [
+        "Fotografia motociclistica",
+        "Passi e valichi dell'Appennino centrale",
+        "Fotografia sportiva su strada",
+        "Bocca Serriola", "Terminillo", "Passo dello Spino", "Viamaggio"
+      ],
+      "sameAs": [
+        "https://www.instagram.com/<PROFILO_INSTAGRAM>",
+        "https://www.facebook.com/<PROFILO_FACEBOOK>",
+        "https://www.linkedin.com/in/<PROFILO_LINKEDIN>"
+      ]
+    },
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://fotomoto.click/#organization",
+      "name": "FotoMoto.Click",
+      "alternateName": ["FotoMoto Click", "FotoMoto"],
+      "url": "https://fotomoto.click/",
+      "logo": "https://fotomoto.click/wp-content/uploads/<LOGO>.png",
+      "image": "https://fotomoto.click/wp-content/uploads/<LOGO>.png",
+      "founder": { "@id": "https://fotomoto.click/#emilio-latini" },
+      "foundingDate": "2025-03",
+      "email": "<EMAIL_PUBBLICA>",
+      "telephone": "<TELEFONO>",
+      "vatID": "<PARTITA_IVA>",
+      "legalName": "<RAGIONE_SOCIALE>",
+      "serviceType": "Fotografia motociclistica sui passi",
+      "priceRange": "8€ - 30€",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IT",
+        "addressRegion": "<REGIONE>",
+        "postalCode": "<CAP>"
+      },
+      "areaServed": [
+        { "@type": "AdministrativeArea", "name": "Umbria" },
+        { "@type": "AdministrativeArea", "name": "Marche" },
+        { "@type": "AdministrativeArea", "name": "Toscana" },
+        { "@type": "AdministrativeArea", "name": "Lazio" }
+      ],
+      "sameAs": [
+        "https://www.instagram.com/<PROFILO_INSTAGRAM>",
+        "https://www.facebook.com/<PROFILO_FACEBOOK>"
+      ]
+    }
+  ]
+}
+</script>

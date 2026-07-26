@@ -1,0 +1,52 @@
+# robots.txt — FotoMoto.Click
+# Versione corretta — kit di esecuzione SEO, 26-07-2026
+# Rif. master audit §4.1 e §11.1. Sostituisce il robots.txt attuale.
+#
+# COSA CAMBIA rispetto all'attuale:
+#  1. RIMOSSO gruppo "User-agent: Googlebot-Image" — sostituiva integralmente
+#     il gruppo * per quel bot (RFC 9309: vale un solo gruppo per crawler),
+#     facendogli perdere tutte le altre direttive. Era inutile (uploads gia' Allow).
+#  2. RIMOSSO "User-agent: AdsBot / Disallow: /" — "AdsBot" NON e' un token valido
+#     di Google (i reali sono AdsBot-Google / AdsBot-Google-Mobile). Se interpretato
+#     per prefisso puo' bloccare il controllo qualita' delle landing di Google Ads.
+#  3. AI CRAWLER — decisione consapevole (§11.1): testo APERTO, file immagine PROTETTI.
+#     GPTBot / Google-Extended / CCBot ora possono leggere l'HTML ma NON /wp-content/uploads/.
+#     Motivo: vendi file ad alta risoluzione dietro paywall; il testo e' marketing e ti
+#     rende citabile da ChatGPT/Gemini/Perplexity. Per RI-BLOCCARE del tutto, rimetti
+#     "Disallow: /" sotto ciascuno di quei tre user-agent.
+#  4. AGGIUNTE trappole di crawl: ?add-to-cart, ?orderby, /feed/.
+#     NB: la paginazione /page/N/ NON e' bloccata qui di proposito — va gestita a livello
+#     server con canonical/404 (vedi execution-kit/pagination-fix.md), cosi' Google puo'
+#     leggere il canonical invece di trovare l'URL semplicemente vietato.
+
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+Allow: /wp-content/uploads/
+Disallow: /wp-content/uploads/wc-logs/
+Disallow: /wp-content/uploads/woocommerce_transient_files/
+Disallow: /wp-content/uploads/woocommerce_uploads/
+Disallow: /?s=
+Disallow: /page/*/?s=
+Disallow: /search/
+Disallow: /*?add-to-cart=
+Disallow: /*?orderby=
+Disallow: /*?add_to_wishlist=
+Disallow: /*/feed/
+Disallow: /*/embed/
+
+# --- Crawler AI: testo consentito, file immagine esclusi (vedi nota 3) ---
+User-agent: GPTBot
+Allow: /
+Disallow: /wp-content/uploads/
+
+User-agent: Google-Extended
+Allow: /
+Disallow: /wp-content/uploads/
+
+User-agent: CCBot
+Allow: /
+Disallow: /wp-content/uploads/
+
+Sitemap: https://fotomoto.click/sitemap_index.xml
+Sitemap: https://fotomoto.click/news-sitemap.xml
