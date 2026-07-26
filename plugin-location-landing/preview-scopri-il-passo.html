@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anteprima — sezione "Scopri il passo" nativa (fml-)</title>
+<style>
+/* estratto dello stile fml- del plugin, per rendere l'anteprima identica al sito reale */
+body{margin:0;background:#070707;color:#fff;font-family:"Red Hat Display",Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+.note{background:#12233d;color:#cfe0ff;font-size:.82rem;padding:10px 20px;border-bottom:1px solid #24406b}
+.fml-wrap{width:min(1180px,calc(100% - 32px));margin:0 auto}
+.fml-section{padding:56px 0}
+.fml-eyebrow{margin:0 0 6px;color:#8a8a8a;font-size:.8rem;font-weight:950;letter-spacing:.10em;text-transform:uppercase}
+.fml-h2{margin:0 0 18px;color:#fff;font-size:clamp(28px,4vw,44px);line-height:1.05;font-weight:950;letter-spacing:-.04em}
+.fml-muted{color:#aaa;line-height:1.65}
+.fml-stats{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.fml-stat{padding:13px 16px;border:1px solid rgba(255,255,255,.16);border-radius:18px;background:rgba(255,255,255,.075)}
+.fml-stat strong{display:block;color:#fff;font-size:24px;line-height:1}
+.fml-stat span{display:block;margin-top:4px;color:rgba(255,255,255,.78);font-size:13px;font-weight:750}
+.fml-trust{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.fml-trust__item{padding:18px;border:1px solid rgba(255,255,255,.10);border-radius:20px;background:#111}
+.fml-trust__item strong{display:block;margin-bottom:6px}
+@media(max-width:900px){.fml-trust{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.fml-trust{grid-template-columns:1fr}}
+</style>
+</head>
+<body class="fml-page">
+<div class="note">Anteprima della sezione "Scopri il passo" resa con le classi native <b>fml-</b> del plugin — così appare in coda alla landica /foto/bocca-serriola/ (dopo le gallerie).</div>
+
+<!-- come apparirebbe nel plugin, esempio Bocca Serriola -->
+<section class="fml-section" id="scopri-il-passo">
+  <div class="fml-wrap">
+    <p class="fml-eyebrow" style="text-align:left">Scopri il passo</p>
+    <h2 class="fml-h2">Bocca Serriola, in sella</h2>
+    <p class="fml-muted" style="max-width:72ch">Un valico dell’Appennino umbro-marchigiano diventato un punto d’incontro per chi gira in moto nel weekend: la strada, i due versanti e cosa aspettarti.</p>
+
+    <div class="fml-stats" style="margin-top:20px">
+      <div class="fml-stat"><strong>730 m</strong><span>quota</span></div>
+      <div class="fml-stat"><strong>SS257</strong><span>Apecchiese</span></div>
+      <div class="fml-stat"><strong>Umbria ↔ Marche</strong></div>
+      <div class="fml-stat"><strong>2 versanti</strong><span>15,9 / 7,6 km</span></div>
+    </div>
+
+    <div class="fml-trust" style="margin-top:22px;grid-template-columns:1fr 1fr;max-width:820px">
+      <div class="fml-trust__item">
+        <span class="fml-muted" style="font-size:12px;font-weight:850;letter-spacing:.04em;text-transform:uppercase">Umbria · più lungo</span>
+        <strong style="display:block;margin-top:8px">Da Città di Castello</strong>
+        <strong style="display:block;font-size:20px;margin:4px 0">15,9 km · +423 m</strong>
+        <span class="fml-muted">Media 2,7%, max ~6,4%, 3 tornanti. Dolce e scorrevole.</span>
+      </div>
+      <div class="fml-trust__item">
+        <span class="fml-muted" style="font-size:12px;font-weight:850;letter-spacing:.04em;text-transform:uppercase">Marche · più ripido</span>
+        <strong style="display:block;margin-top:8px">Da Apecchio</strong>
+        <strong style="display:block;font-size:20px;margin:4px 0">7,6 km · +247 m</strong>
+        <span class="fml-muted">Media 3,3%, max 7,9%, 1 tornante. Corto e diretto tra i boschi.</span>
+      </div>
+    </div>
+
+    <p class="fml-muted" style="margin-top:22px;max-width:76ch">Più che per la quota, Bocca Serriola conta per dove sta: la soglia tra la Val Tiberina e la valle del Biscubio. I tifernati lo chiamano «La Cima»; il nome deriverebbe dal latino <em>serrula</em>, “piccola sega”, per il legname che di qui scendeva a valle.</p>
+
+    <div class="fml-trust__item" style="margin-top:18px;max-width:640px">
+      <div style="display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.09)"><span class="fml-muted" style="font-weight:750">Quota</span><span style="text-align:right;color:#fff">730 m s.l.m.</span></div>
+      <div style="display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.09)"><span class="fml-muted" style="font-weight:750">Strada</span><span style="text-align:right;color:#fff">SS 257 Apecchiese</span></div>
+      <div style="display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.09)"><span class="fml-muted" style="font-weight:750">Regioni / Province</span><span style="text-align:right;color:#fff">Umbria (Perugia) ↔ Marche (Pesaro e Urbino)</span></div>
+      <div style="display:flex;justify-content:space-between;gap:16px;padding:9px 0"><span class="fml-muted" style="font-weight:750">Comuni</span><span style="text-align:right;color:#fff">Città di Castello (PG) · Apecchio (PU)</span></div>
+    </div>
+  </div>
+</section>
+</body>
+</html>
