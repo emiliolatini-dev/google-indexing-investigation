@@ -222,3 +222,19 @@ if ( ! function_exists( 'fmc_scopri_il_passo_shortcode' ) ) {
 	}
 	add_shortcode( 'scopri_il_passo', 'fmc_scopri_il_passo_shortcode' );
 }
+
+/**
+ * Auto-posizionamento: attacca il modulo SUBITO DOPO l'output dello shortcode
+ * [fm_location_hub] (che genera la landing località). Nessuna modifica al codice
+ * della landing. Null-safe: dove non c'è una località singola, [scopri_il_passo]
+ * restituisce vuoto e non stampa nulla. Per rimuovere: disattiva questo snippet.
+ */
+if ( ! function_exists( 'fmc_append_scopri_after_hub' ) ) {
+	function fmc_append_scopri_after_hub( $output, $tag ) {
+		if ( 'fm_location_hub' === $tag ) {
+			$output .= do_shortcode( '[scopri_il_passo]' );
+		}
+		return $output;
+	}
+	add_filter( 'do_shortcode_tag', 'fmc_append_scopri_after_hub', 10, 2 );
+}
