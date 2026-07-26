@@ -37,3 +37,22 @@ add_filter('rank_math/sitemap/http_headers', function ($headers, $is_xsl) {
     return $headers;
 
 }, 20, 2);
+
+/**
+ * Il Cache-Control finale della sitemap non viene dall'array Rank Math ma da
+ * nocache_headers() di WordPress (in WP 6.x il default e' proprio
+ * "no-cache, must-revalidate, max-age=0, no-store, private"). Lo correggiamo qui,
+ * SOLO per le richieste sitemap, senza toccare il no-cache di admin/ajax/altro.
+ */
+add_filter('nocache_headers', function ($headers) {
+
+    $uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+
+    if (preg_match('#sitemap[^/]*\.(xml|xsl)$#i', $uri)) {
+        $headers['Cache-Control'] = 'public, max-age=300, must-revalidate';
+        unset($headers['Pragma'], $headers['Expires']);
+    }
+
+    return $headers;
+
+}, 99);
