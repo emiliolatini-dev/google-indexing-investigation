@@ -1,0 +1,132 @@
+{
+  "_meta": {
+    "descrizione": "Data layer per il template dinamico /passi/{slug}/. Livello C (curato). Fatti da fonti pubbliche verificate il 2026-07-26. Campi 'coordinate' e alcuni profili salita sono da confermare (verificato:false). Non pubblicare i campi 'dati_archivio' se non calcolati dal dataset reale.",
+    "hero_path": "wp-content/uploads/fm-hero/{slug}/desktop/hero-desktop-NNN.webp",
+    "schema_type_default": "Place,Mountain,TouristAttraction"
+  },
+  "passi": [
+    {
+      "slug": "bocca-serriola",
+      "nome": "Bocca Serriola",
+      "alternateName": "La Cima",
+      "tipo": "valico",
+      "quota_m": 730,
+      "strada": "SS 257 Apecchiese",
+      "regioni": ["Umbria", "Marche"],
+      "province": ["Perugia", "Pesaro e Urbino"],
+      "comuni": ["Città di Castello", "Apecchio"],
+      "spartiacque": "Val Tiberina / Valle del Biscubio (bacino del Candigliano)",
+      "catena": "Appennino umbro-marchigiano",
+      "coordinate": { "lat": 43.5333, "lon": 12.4200, "verificata": false },
+      "versanti": [
+        { "da": "Città di Castello", "regione": "Umbria", "km": 15.9, "dislivello_m": 423, "pendenza_media_pct": 2.7, "pendenza_max_pct": 6.4, "tornanti": 3 },
+        { "da": "Apecchio", "regione": "Marche", "km": 7.6, "dislivello_m": 247, "pendenza_media_pct": 3.3, "pendenza_max_pct": 7.9, "tornanti": 1 }
+      ],
+      "carattere": "Passo 'basso' ma dai due avvicinamenti splendidi: lungo e scorrevole dal lato umbro, corto e più ripido da quello marchigiano. Fonti turistiche lo definiscono un paradiso per i motociclisti. A sud compaiono i calanchi marnosi.",
+      "dintorni": "Città di Castello e la Val Tiberina (versante umbro); Apecchio, città della birra e dei fossili, e l'alto Metauro verso Urbino (versante marchigiano). Da collegare con Bocca Trabaria.",
+      "punto_foto": "[DA POPOLARE: km/versante/riferimento del punto di scatto]",
+      "note_stagionalita": "Stagione moto ~aprile-ottobre; raramente chiude per neve a 730 m.",
+      "foto_archivio_note": "~48.226 foto (path /foto/bocca-serriola/) — ~89% dell'archivio",
+      "fonti": ["https://it.wikipedia.org/wiki/Bocca_Serriola", "https://climbfinder.com/en/climbs/valico-di-bocca-serriola-citta-di-castello", "https://climbfinder.com/en/climbs/valico-di-bocca-serriola-apecchio"]
+    },
+    {
+      "slug": "terminillo",
+      "nome": "Terminillo",
+      "alternateName": "Monte Terminillo",
+      "tipo": "monte",
+      "quota_m": 2217,
+      "quota_note": "Vetta 2217 m; base sciistica Pian de' Valli ~1620 m [DA VERIFICARE]",
+      "strada": "SS 4bis 'Via del Terminillo' (da Rieti); SP verso Sella di Leonessa",
+      "regioni": ["Lazio"],
+      "province": ["Rieti"],
+      "comuni": ["Rieti", "Leonessa"],
+      "spartiacque": "Monti Reatini",
+      "catena": "Appennino centrale (Monti Reatini)",
+      "coordinate": { "lat": 42.4667, "lon": 12.9833, "verificata": false },
+      "versanti": [
+        { "da": "Rieti (SS4bis)", "regione": "Lazio", "km": null, "dislivello_m": null, "note": "sequenza di curve ampie e ben collegate fino a Pian de' Valli; asfalto ottimo [profilo km/dislivello DA VERIFICARE]" },
+        { "da": "Leonessa (SP10/SR521)", "regione": "Lazio", "km": null, "dislivello_m": null, "note": "molte curve in discesa; il tratto Terminillo-Leonessa può chiudere per neve" }
+      ],
+      "carattere": "Non un valico ma un massiccio e comprensorio sciistico ('la montagna di Roma'), tra i più cercati dell'Appennino. Salita da Rieti con curve ampie e asfalto eccellente; tratti alti più stretti e ombreggiati da guidare con prudenza.",
+      "dintorni": "Rieti e la piana reatina, i laghi Lungo e di Ripasottile; Leonessa. Comprensorio sciistico di Pian de' Valli.",
+      "punto_foto": "[DA POPOLARE]",
+      "note_stagionalita": "Quota elevata: il tratto per Leonessa chiude per neve nei mesi freddi — verificare prima di salire.",
+      "foto_archivio_note": "[DA DATI: conteggio /foto/terminillo/]",
+      "schema_type": "Mountain,TouristAttraction,SkiResort",
+      "fonti": ["https://www.insella.it/da-sapere/strade-percorsi/fantastica-salita-al-monte-terminillo-percorsi-dove-mangiare-65537", "https://lnx.comune.rieti.it/turismo-terminillo"]
+    },
+    {
+      "slug": "viamaggio",
+      "nome": "Passo di Viamaggio",
+      "alternateName": "Valico di Viamaggio",
+      "tipo": "valico",
+      "quota_m": 983,
+      "strada": "SS 258 Marecchiese",
+      "regioni": ["Toscana"],
+      "province": ["Arezzo"],
+      "comuni": ["Pieve Santo Stefano", "Badia Tedalda"],
+      "spartiacque": "Valtiberina / Valmarecchia (torrente Sinigiola)",
+      "catena": "Appennino tosco-romagnolo",
+      "coordinate": { "lat": 43.7100, "lon": 12.1600, "verificata": false },
+      "versanti": [
+        { "da": "Sansepolcro / Valtiberina", "regione": "Toscana", "km": null, "dislivello_m": null, "note": "[profilo DA VERIFICARE su climbfinder]" },
+        { "da": "Valmarecchia (verso Rimini)", "regione": "Toscana/Emilia-Romagna", "km": null, "dislivello_m": null, "note": "[profilo DA VERIFICARE]" }
+      ],
+      "carattere": "Valico al confine tra i comuni di Pieve Santo Stefano e Badia Tedalda, sulla Marecchiese che unisce Sansepolcro a Rimini. Strada storica (antica Iter Tiberinum) molto amata e molto frequentata dai motociclisti nei weekend.",
+      "dintorni": "Sansepolcro e la Valtiberina; l'eremo di Cerbaiolo; la Valmarecchia verso Rimini.",
+      "punto_foto": "[DA POPOLARE]",
+      "note_stagionalita": "Stagione moto ~aprile-ottobre.",
+      "foto_archivio_note": "Viamaggio oggi NON ha un path prodotto proprio (path-data bug §2.1) — priorità di fix",
+      "fonti": ["https://it.wikipedia.org/wiki/Passo_di_Viamaggio"]
+    },
+    {
+      "slug": "spino",
+      "nome": "Passo dello Spino",
+      "alternateName": "Valico dello Spino",
+      "tipo": "valico",
+      "quota_m": 1054,
+      "quota_note": "Cartello 1005 m; quota reale 1054 m",
+      "strada": "SP 208",
+      "regioni": ["Toscana"],
+      "province": ["Arezzo"],
+      "comuni": ["Chiusi della Verna", "Pieve Santo Stefano"],
+      "spartiacque": "Casentino / Valtiberina",
+      "catena": "Appennino tosco-romagnolo",
+      "coordinate": { "lat": 43.6800, "lon": 11.9400, "verificata": false },
+      "versanti": [
+        { "da": "Chiusi della Verna (Casentino)", "regione": "Toscana", "km": null, "dislivello_m": null, "note": "sede storica di cronoscalata; strada tecnica con cordoli" },
+        { "da": "Pieve Santo Stefano (Valtiberina)", "regione": "Toscana", "km": null, "dislivello_m": null, "note": "[profilo DA VERIFICARE]" }
+      ],
+      "carattere": "La provinciale 'che si crede una pista': sede storica di cronoscalata, tracciato tecnico e panoramico. Collega il Casentino alla Valtiberina, vicino al santuario della Verna. Dal passo si vedono Alpe della Luna, Alpe di Catenaia e Monte Penna.",
+      "dintorni": "Il santuario francescano della Verna; Chiusi della Verna; la Valtiberina.",
+      "punto_foto": "[DA POPOLARE]",
+      "note_stagionalita": "A 1054 m possibile neve in inverno.",
+      "foto_archivio_note": "[DA DATI: conteggio /foto/spino/; ~86 nel campione audit]",
+      "fonti": ["https://www.arezzometeo.com/valico-dello-spino-1054-m/", "https://www.insella.it/da-sapere/strade-percorsi/passo-dello-spino-lappennino-cordoli-73477"]
+    },
+    {
+      "slug": "capannelle",
+      "nome": "Passo delle Capannelle",
+      "alternateName": "Valico delle Capannelle",
+      "tipo": "valico",
+      "quota_m": 1300,
+      "strada": "SS 80 del Gran Sasso d'Italia",
+      "regioni": ["Abruzzo"],
+      "province": ["L'Aquila", "Teramo"],
+      "comuni": ["[DA VERIFICARE versante aquilano]", "[DA VERIFICARE versante teramano]"],
+      "spartiacque": "Conca aquilana / versante adriatico",
+      "catena": "Gran Sasso e Monti della Laga (Parco Nazionale)",
+      "coordinate": { "lat": 42.5000, "lon": 13.3500, "verificata": false },
+      "versanti": [
+        { "da": "L'Aquila", "regione": "Abruzzo", "km": null, "dislivello_m": null, "pendenza_media_pct": 5, "note": "versante aquilano ~5%" },
+        { "da": "Teramo", "regione": "Abruzzo", "km": null, "dislivello_m": null, "pendenza_media_pct": 4, "note": "versante teramano ~4%" }
+      ],
+      "carattere": "Definita da alcune testate 'la strada più bella d'Italia'. Valico a 1300 m sulla SS80 del Gran Sasso, tra la conca aquilana e il Teramano, dentro il Parco Nazionale del Gran Sasso e Monti della Laga. Antica via della transumanza (via Cecilia).",
+      "dintorni": "Il massiccio del Gran Sasso e i Monti della Laga; usata più volte dal Giro d'Italia.",
+      "punto_foto": "[DA POPOLARE]",
+      "note_stagionalita": "Quota 1300 m: possibili chiusure/neve in inverno.",
+      "foto_archivio_note": "[DA DATI: conteggio /foto/capannelle/; ~1.032 nel campione audit]",
+      "fonti": ["https://easyholidays.it/passo-delle-capannelle/", "https://it.wikipedia.org/wiki/Strada_statale_80_del_Gran_Sasso_d%27Italia"]
+    }
+  ]
+}
