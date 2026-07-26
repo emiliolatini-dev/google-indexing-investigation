@@ -10,6 +10,13 @@ schema, FAQ scaffold, CTA, breadcrumb, galleria) è identica e templatizzata; la
 si limitasse a sostituire il nome, otterresti 5 pagine quasi identiche = thin content. La
 differenziazione reale la danno i campi "curati" + i numeri d'archivio esclusivi.
 
+## Regola editoriale (anti-ridondanza)
+**Ogni fatto una volta sola, nella sua sede migliore.** I fatti duri (quota, strada, province,
+coordinate) vivono nella **tabella dati**; la prosa (hero, intro) aggiunge contesto e non li
+ripete. Niente ripetizioni di keyword per "compiacere i motori": Google non le premia da anni e
+un lettore che conosce il passo le percepisce come riempitivo. Lo `stat strip` mostra i numeri
+del *servizio/archivio* (foto fatte, tempi, risoluzione), non la geografia già in tabella.
+
 ## I tre livelli dei campi
 
 ### A · AUTO / dinamico — zero lavoro per località
