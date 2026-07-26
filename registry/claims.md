@@ -19,6 +19,9 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 | F-009 | Il 24/06/2026 Googlebot ha eseguito GET di `sitemap_index.xml` e `product-sitemap1.xml` durante una finestra in cui le sitemap erano stale. | E-009, E-003 | active | 2026-06-26 |
 | F-010 | Per la sessione 20-06-2026 la pipeline di crawl è completa (landing → prodotto → immagini). Per la sessione 21-06-2026 nessun crawl spontaneo è stato osservato nei log disponibili prima della richiesta manuale GSC del 26/06. | E-010, E-011 | active | 2026-06-26 |
 | F-011 | La pipeline post-patch (flush automatico cache Rank Math + rigenerazione sitemap) è validata: `sitemap-check.sh` restituisce 8 PASS / 0 FAIL. | E-012 | active | 2026-06-26 |
+| F-012 | Googlebot recupera l'HTML del sito in tempo reale: il test live GSC su una landing sessione restituisce "URL disponibile per Google"; curl con UA Googlebot riceve HTTP 200 su home e sitemap. | E-013 | active | 2026-07-26 |
+| F-013 | `sitemap_index.xml` è XML valido e leggibile (no BOM, UTF-8, 244 voci): Bing l'ha crawlata con Status "Success" il 25/07/2026 scoprendo 58.400 URL. Il "Impossibile leggere" di Google è lato Google, non un difetto del file. | E-013 | active | 2026-07-26 |
+| F-014 | Il 403 osservato dal fetcher in cloud era per IP datacenter (Cloudflare), non applicabile al Googlebot verificato. Dopo il re-invio del 26/07 lo stato GSC è passato da "Impossibile recuperare/mai letta" a "Ultima lettura 26/07 / Impossibile leggere". | E-013 | active | 2026-07-26 |
 
 ---
 
@@ -58,6 +61,33 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 
 ---
 
+### F-012
+
+- **Statement:** Googlebot recupera l'HTML del sito in tempo reale. GSC URL Inspection "Testa URL pubblicato" su `https://fotomoto.click/foto/bocca-serriola/11-07-2026/` restituisce "L'URL è disponibile per Google — La pagina può essere indicizzata" (26/07 21:28). `curl` con UA Googlebot desktop/mobile riceve HTTP 200 su `/`, `sitemap_index.xml`, sotto-sitemap (0,3–0,4 s). Il test live sull'XML restituisce "Si è verificato un problema", ma è un limite noto di URL Inspection sugli XML, non prova di blocco.
+- **Evidence:** [E-013](../evidence/gsc/E-013_2026-07-26_gsc_live-session-p0-diagnosis.md)
+- **Status:** active
+- **Added:** 2026-07-26
+
+---
+
+### F-013
+
+- **Statement:** `sitemap_index.xml` è XML ben formato e leggibile: nessun BOM (primi byte `<?xm`), UTF-8, root `sitemapindex`, 244 `<sitemap>`/244 `<loc>`, parser .NET OK, `Content-Encoding: gzip`. Bing Webmaster Tools ha crawlato la stessa sitemap con Status "Success" il 25/07/2026, scoprendo 58.400 URL. Poiché un secondo motore la processa senza problemi, il "Impossibile leggere" di Google è attribuibile a Google (stato stale + header), non al contenuto del file.
+- **Evidence:** [E-013](../evidence/gsc/E-013_2026-07-26_gsc_live-session-p0-diagnosis.md)
+- **Status:** active
+- **Added:** 2026-07-26
+
+---
+
+### F-014
+
+- **Statement:** Il 403 osservato in sessioni precedenti dal fetcher in cloud proveniva da un IP datacenter e riflette una challenge Cloudflare sugli IP non verificati; non si applica al Googlebot verificato. Dopo il re-invio manuale di `sitemap_index.xml` in GSC (26/07), la pagina di dettaglio è passata da "Impossibile recuperare / Ultima lettura vuota" a "Ultima lettura 26/07/26 / Impossibile leggere la Sitemap" — cioè Google ora la raggiunge ma non la interpreta. Header sitemap misurato: `Cache-Control: no-cache, must-revalidate, max-age=0, no-store, private`.
+- **Evidence:** [E-013](../evidence/gsc/E-013_2026-07-26_gsc_live-session-p0-diagnosis.md)
+- **Status:** active
+- **Added:** 2026-07-26
+
+---
+
 ## Observations (O-)
 
 | ID | Statement | Evidence | Status | Added |
@@ -67,6 +97,7 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 | O-003 | La funzione `flush_rank_math_sitemap_cache()` aggiunta al mu-plugin rimuove file fisici, option, transient, esegue `wp_cache_flush()` e LiteSpeed purge. | E-012 | active | 2026-06-26 |
 | O-004 | Il 21-06-2026 è stata eseguita una richiesta di indicizzazione manuale via GSC URL Inspection per la landing della sessione Bocca Serriola 21-06-2026. | E-007 | active | 2026-06-26 |
 | O-005 | A circa 7 giorni dalla pubblicazione, GSC riportava la landing della sessione 21-06-2026 come non presente nell'indice di Google. È stata eseguita una seconda richiesta di indicizzazione. | E-007 | active | 2026-06-26 |
+| O-006 | IndexNow è già attivo su fotomoto.click (sorgenti Rank Math + WordPress): 156.200 URL inviati totali, 60 nelle ultime 19 h. Canale di notifica istantanea a Bing/Yandex operativo. | E-013 | active | 2026-07-26 |
 
 ---
 
@@ -112,3 +143,12 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 - **Evidence:** E-007 *(da registrare in evidence/gsc/)*
 - **Status:** active
 - **Added:** 2026-06-26
+
+---
+
+### O-006
+
+- **Statement:** IndexNow risulta già attivo su fotomoto.click (Bing Webmaster Tools → IndexNow): 156.200 URL inviati in totale, 60 nelle ultime 19 ore, con sorgenti "Rankmath" e "Wordpress". Il canale di notifica istantanea degli URL a Bing/Yandex è quindi già operativo; non richiede setup. Rilevante come contesto: la scoperta/segnalazione degli URL verso Bing funziona, isolando ulteriormente il problema di indicizzazione al solo Google.
+- **Evidence:** [E-013](../evidence/gsc/E-013_2026-07-26_gsc_live-session-p0-diagnosis.md)
+- **Status:** active
+- **Added:** 2026-07-26

@@ -19,6 +19,8 @@ and the rules in [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-
 | H-002 | Prodotti WooCommerce non pubblicati o non accessibili | **rejected** | 2026-06-26 |
 | H-003 | Errore di canonical URL o Schema markup | **rejected** | 2026-06-26 |
 | H-004 | `lastmod` Rank Math errato o incoerente con il DB | **rejected** | 2026-06-26 |
+| H-005 | Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google | **rejected** | 2026-07-26 |
+| H-006 | Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google | **supported (leading)** | 2026-07-26 |
 
 Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 
@@ -79,3 +81,31 @@ Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 - **Test plan:** n/a — falsificata da E-008
 - **Related:** F-008, E-008
 - **Notes:** —
+
+---
+
+### H-005 — Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google
+
+- **Status:** rejected
+- **Created:** 2026-07-26
+- **Last updated:** 2026-07-26
+- **Statement:** Il "Impossibile recuperare" sulle sitemap era causato da una regola bot/WAF (Cloudflare) che restituiva 403 al fetcher di Google, impedendogli di leggere le sitemap.
+- **Supporting evidence:** solo il 403 osservato dal fetcher in cloud in sessioni precedenti — spiegato da F-014 come challenge Cloudflare su IP datacenter non verificato.
+- **Falsifying evidence:** F-012 (Googlebot recupera l'HTML in tempo reale via GSC live test; curl UA Googlebot → 200), F-013 (Bing legge la stessa sitemap con Success, 58.400 URL), F-014 (il 403 era IP-datacenter, non applicabile al Googlebot verificato).
+- **Test plan:** Eseguito nella sessione live del 26/07 (E-013). Tre prove indipendenti falsificano l'ipotesi.
+- **Related:** F-012, F-013, F-014, E-013, H-006
+- **Notes:** Declassa l'ipotesi principale registrata nell'addendum GSC/GA del 26/07. Il server è sano per il Googlebot verificato.
+
+---
+
+### H-006 — Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google
+
+- **Status:** supported (leading)
+- **Created:** 2026-07-26
+- **Last updated:** 2026-07-26
+- **Statement:** Il fallimento di lettura delle sitemap è lato Google: combinazione dell'header `Cache-Control: no-cache, no-store, private, max-age=0` sulla sitemap (servita dinamicamente, cf-cache-status DYNAMIC) e di uno stato GSC stale ereditato dall'incidente Rank Math di giugno (H-001). Non è un problema di contenuto (F-013) né di raggiungibilità (F-012, F-014).
+- **Supporting evidence:** F-014 (header misurato; transizione a "Impossibile leggere" dopo re-invio), F-013 (Bing, che non mostra la stessa sensibilità, legge il file), H-001 (drift cache Rank Math a monte).
+- **Falsifying evidence:** nessuna finora. Da verificare con il test.
+- **Test plan:** (1) Rimuovere `no-store, private` dalla sitemap → `public, max-age=300, must-revalidate` (execution-kit/00-P0). (2) Attendere 24–72 h. (3) Verificare in GSC che `sitemap_index.xml` passi a "Riuscito" con "Pagine rilevate" > 0. Registrare l'esito.
+- **Related:** F-012, F-013, F-014, H-001, E-013
+- **Notes:** Il re-invio del 26/07 ha già avviato un nuovo ciclo di lettura da parte di Google (Ultima lettura popolata).
