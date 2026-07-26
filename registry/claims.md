@@ -22,6 +22,7 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 | F-012 | Googlebot recupera l'HTML del sito in tempo reale: il test live GSC su una landing sessione restituisce "URL disponibile per Google"; curl con UA Googlebot riceve HTTP 200 su home e sitemap. | E-013 | active | 2026-07-26 |
 | F-013 | `sitemap_index.xml` è XML valido e leggibile (no BOM, UTF-8, 244 voci): Bing l'ha crawlata con Status "Success" il 25/07/2026 scoprendo 58.400 URL. Il "Impossibile leggere" di Google è lato Google, non un difetto del file. | E-013 | active | 2026-07-26 |
 | F-014 | Il 403 osservato dal fetcher in cloud era per IP datacenter (Cloudflare), non applicabile al Googlebot verificato. Dopo il re-invio del 26/07 lo stato GSC è passato da "Impossibile recuperare/mai letta" a "Ultima lettura 26/07 / Impossibile leggere". | E-013 | active | 2026-07-26 |
+| F-015 | Il fix dell'header sitemap (`no-store, private` → `public, max-age=300` via filtro `nocache_headers`) è stato applicato e verificato via curl, ma la lettura GSC resta "Impossibile leggere" (0 pagine) su lettura fresca del 27/07. Header ESCLUSO come causa. Cloudflare ESCLUSO (problema antecedente a CF, per il proprietario). Bing legge la stessa sitemap (F-013). Causa ancora aperta. | E-014 | active | 2026-07-27 |
 
 ---
 
@@ -85,6 +86,15 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 - **Evidence:** [E-013](../evidence/gsc/E-013_2026-07-26_gsc_live-session-p0-diagnosis.md)
 - **Status:** active
 - **Added:** 2026-07-26
+
+---
+
+### F-015
+
+- **Statement:** L'header sitemap è stato corretto nel mu-plugin `fotomotorankmathsitemapheaders.php` aggiungendo un filtro `nocache_headers` (vera fonte del Cache-Control in WP 6.x) condizionato alle richieste sitemap: da `no-cache, must-revalidate, max-age=0, no-store, private` a `public, max-age=300, must-revalidate`, verificato via curl su index e sotto-sitemap. Ciononostante, dopo re-invio, GSC mostra "Ultima lettura 27/07/26 / 0 pagine / Impossibile leggere la Sitemap" su lettura fresca. **Header rigettato come causa** (H-006). **Cloudflare escluso** come causa: il proprietario conferma che il problema è antecedente all'introduzione di Cloudflare. Contenuto XML già escluso (F-013, Bing legge 58.400 URL). Causa di "Impossibile leggere" ancora aperta.
+- **Evidence:** [E-014](../evidence/gsc/E-014_2026-07-27_sitemap-header-fix.md)
+- **Status:** active
+- **Added:** 2026-07-27
 
 ---
 

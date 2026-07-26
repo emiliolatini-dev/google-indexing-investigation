@@ -16,6 +16,7 @@ Rules: [CONTRIBUTING.md §4](../../CONTRIBUTING.md#4-evidence-rules).
 | ID | Date | Description | Demonstrates | Status |
 |----|------|-------------|--------------|--------|
 | [E-013](E-013_2026-07-26_gsc_live-session-p0-diagnosis.md) | 2026-07-26 | Sessione live GSC + Bing + curl server: diagnosi P0 sitemap | F-012, F-013, F-014, O-006; falsifica H-005; supporta H-006 | active |
+| [E-014](E-014_2026-07-27_sitemap-header-fix.md) | 2026-07-27 | Fix header sitemap applicato; "Impossibile leggere" persiste | F-015; rigetta H-006; esclude Cloudflare | active |
 
 ## Entries
 

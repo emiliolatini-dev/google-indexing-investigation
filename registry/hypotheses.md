@@ -20,7 +20,7 @@ and the rules in [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-
 | H-003 | Errore di canonical URL o Schema markup | **rejected** | 2026-06-26 |
 | H-004 | `lastmod` Rank Math errato o incoerente con il DB | **rejected** | 2026-06-26 |
 | H-005 | Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google | **rejected** | 2026-07-26 |
-| H-006 | Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google | **supported (leading)** | 2026-07-26 |
+| H-006 | Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google | **rejected** (header fixato, problema persiste) | 2026-07-27 |
 
 Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 
@@ -100,12 +100,12 @@ Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 
 ### H-006 — Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google
 
-- **Status:** supported (leading)
+- **Status:** rejected (2026-07-27)
 - **Created:** 2026-07-26
-- **Last updated:** 2026-07-26
-- **Statement:** Il fallimento di lettura delle sitemap è lato Google: combinazione dell'header `Cache-Control: no-cache, no-store, private, max-age=0` sulla sitemap (servita dinamicamente, cf-cache-status DYNAMIC) e di uno stato GSC stale ereditato dall'incidente Rank Math di giugno (H-001). Non è un problema di contenuto (F-013) né di raggiungibilità (F-012, F-014).
-- **Supporting evidence:** F-014 (header misurato; transizione a "Impossibile leggere" dopo re-invio), F-013 (Bing, che non mostra la stessa sensibilità, legge il file), H-001 (drift cache Rank Math a monte).
-- **Falsifying evidence:** nessuna finora. Da verificare con il test.
-- **Test plan:** (1) Rimuovere `no-store, private` dalla sitemap → `public, max-age=300, must-revalidate` (execution-kit/00-P0). (2) Attendere 24–72 h. (3) Verificare in GSC che `sitemap_index.xml` passi a "Riuscito" con "Pagine rilevate" > 0. Registrare l'esito.
-- **Related:** F-012, F-013, F-014, H-001, E-013
-- **Notes:** Il re-invio del 26/07 ha già avviato un nuovo ciclo di lettura da parte di Google (Ultima lettura popolata).
+- **Last updated:** 2026-07-27
+- **Statement:** Il fallimento di lettura delle sitemap è lato Google: combinazione dell'header `Cache-Control: no-cache, no-store, private, max-age=0` sulla sitemap e di uno stato GSC stale. Non è un problema di contenuto (F-013) né di raggiungibilità (F-012, F-014).
+- **Supporting evidence:** (storica) F-014 header misurato; F-013 Bing legge il file.
+- **Falsifying evidence:** **F-015** — l'header è stato corretto a `public, max-age=300` (verificato via curl) e la lettura fresca del 27/07 mostra ancora "Impossibile leggere / 0 pagine". Il fix dell'header NON ha risolto.
+- **Test plan:** Eseguito (E-014). Header rigettato come causa.
+- **Related:** F-012, F-013, F-014, F-015, E-013, E-014, H-007
+- **Notes:** Fix header comunque acquisito e utile. Anche Cloudflare escluso (problema antecedente a CF). Causa "Impossibile leggere" ancora da individuare — vedi E-014 §direzioni non esplorate.
