@@ -1,0 +1,17 @@
+# Segreti — mai versionare
+.webui_secret_key
+
+# Repository annidato: `fmc-operating-memory` ha il proprio remote
+# (emiliolatini-dev/fmc-operating-memory). Va aggiornato da lì, non da qui.
+operating-memory/
+
+# Artefatti diagnostici locali alla macchina, non riproducibili altrove
+opcache-local-diagnostic.php
+opcache-local-reset.php
+php.ini.opcache-disabled-probe
+php.ini.opcache-working
+
+# Scratch di sessione
+tmp-*.html
+step2-visual-compare.html
+73136-link-in-bio-patched.php
