@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ============================================================
+     MOCKUP PAGINA /passi/bocca-serriola/  — FotoMoto.Click
+     Roadmap master audit azione 26 (P0). Rif. §6.2.
+     Questo file e' un MOCKUP navigabile: il dev riprende copy,
+     struttura e schema. I dati geografici sono VERIFICATI (Wikipedia +
+     climbfinder, 26-07-2026). I campi marcati [DA POPOLARE] vanno
+     riempiti con dati reali del punto foto / archivio / dintorni.
+     ============================================================ -->
+
+<title>Bocca Serriola in moto: la guida completa al valico (730 m) | FotoMoto.Click</title>
+<meta name="description" content="Guida a Bocca Serriola in moto: quota 730 m, SS257 Apecchiese tra Umbria e Marche, i due versanti, il punto foto e oltre 48.000 motociclisti fotografati. Trova le tue foto.">
+<link rel="canonical" href="https://fotomoto.click/passi/bocca-serriola/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bocca Serriola in moto — la guida completa">
+<meta property="og:description" content="Il valico a 730 m tra Umbria e Marche sulla SS257 Apecchiese: la strada, i due versanti, il punto foto e oltre 48.000 moto fotografate.">
+<meta property="og:url" content="https://fotomoto.click/passi/bocca-serriola/">
+
+<style>
+  :root{
+    --ink:#14181d; --muted:#5b6572; --line:#e7eaef; --bg:#ffffff; --soft:#f5f7fa;
+    --brand:#0e5bd8; --brand-ink:#0a3f97; --accent:#ff5a1f; --good:#1a7f4b;
+    --radius:14px; --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    color:var(--ink);background:var(--bg);line-height:1.6;font-size:17px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  h1,h2,h3{line-height:1.2;letter-spacing:-.01em}
+  h1{font-size:2.35rem;margin:.2em 0 .3em}
+  h2{font-size:1.6rem;margin:2.2em 0 .6em;padding-top:.4em}
+  h3{font-size:1.15rem;margin:1.4em 0 .3em}
+  .note{background:#fff7ed;border:1px solid #ffd9b3;color:#7a3e00;padding:6px 10px;border-radius:8px;
+    font-size:.82rem;display:inline-block;margin:.3em 0}
+  /* header */
+  .topbar{border-bottom:1px solid var(--line);font-size:.82rem;color:var(--muted)}
+  .topbar .wrap{display:flex;gap:6px;align-items:center;padding:10px 20px}
+  .crumb a{color:var(--muted)}
+  /* hero */
+  .hero{background:linear-gradient(160deg,#0e1726,#1d3a5f 60%,#0e5bd8);color:#fff;padding:56px 0 48px}
+  .hero .kicker{text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;opacity:.85;font-weight:600}
+  .hero h1{color:#fff;max-width:16ch}
+  .lede{font-size:1.15rem;max-width:60ch;opacity:.96}
+  .cta{display:inline-block;background:var(--accent);color:#fff;font-weight:700;padding:14px 26px;
+    border-radius:999px;margin-top:18px;font-size:1.05rem}
+  .cta.secondary{background:transparent;border:2px solid rgba(255,255,255,.6);margin-left:10px}
+  .hero small{display:block;margin-top:12px;opacity:.8;font-size:.85rem}
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin:26px 0}
+  .stat{background:#fff;padding:18px 16px;text-align:center}
+  .stat b{display:block;font-size:1.7rem;color:var(--brand-ink);line-height:1.1}
+  .stat span{font-size:.8rem;color:var(--muted)}
+  /* data table */
+  table.data{width:100%;border-collapse:collapse;margin:12px 0}
+  table.data th,table.data td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.data th{width:38%;color:var(--muted);font-weight:600}
+  /* two versanti */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:14px 0}
+  .card{border:1px solid var(--line);border-radius:var(--radius);padding:18px;background:var(--soft)}
+  .card h3{margin-top:0}
+  .card .big{font-size:1.5rem;font-weight:700;color:var(--brand-ink)}
+  .pill{display:inline-block;background:#e8f0fe;color:var(--brand-ink);font-size:.72rem;font-weight:600;
+    padding:3px 9px;border-radius:999px;margin-right:4px}
+  /* photo point highlight */
+  .highlight{background:#0e1726;color:#fff;border-radius:var(--radius);padding:26px;margin:18px 0}
+  .highlight h2{color:#fff;margin-top:0}
+  .highlight a{color:#9ec3ff}
+  /* gallery */
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+  .gallery .ph{aspect-ratio:4/3;background:repeating-linear-gradient(45deg,#eef1f5,#eef1f5 10px,#e4e8ee 10px,#e4e8ee 20px);
+    border-radius:10px;display:flex;align-items:center;justify-content:center;color:#9aa4b1;font-size:.72rem;text-align:center;padding:6px}
+  /* faq */
+  details{border:1px solid var(--line);border-radius:10px;padding:2px 16px;margin:8px 0;background:#fff}
+  details summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary::before{content:"＋";color:var(--brand);margin-right:10px;font-weight:700}
+  details[open] summary::before{content:"−"}
+  details p{margin:0 0 14px}
+  /* around */
+  .around{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0}
+  .around .card{background:#fff}
+  /* footer cta */
+  .finalcta{background:var(--soft);border-radius:var(--radius);padding:34px;text-align:center;margin:34px 0}
+  .finalcta h2{margin-top:0}
+  footer{border-top:1px solid var(--line);color:var(--muted);font-size:.85rem;padding:26px 0;margin-top:30px}
+  @media(max-width:760px){
+    h1{font-size:1.8rem}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .cols,.around,.gallery{grid-template-columns:1fr 1fr}
+    .cta.secondary{margin-left:0;margin-top:8px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Breadcrumb -->
+<div class="topbar"><div class="wrap crumb">
+  <a href="/">Home</a> ›
+  <a href="/passi/">Passi</a> ›
+  <strong style="color:var(--ink)">Bocca Serriola</strong>
+</div></div>
+
+<!-- HERO -->
+<header class="hero"><div class="wrap">
+  <div class="kicker">Passo · Appennino umbro-marchigiano · 730 m</div>
+  <h1>Bocca Serriola in moto — la guida completa</h1>
+  <p class="lede">Sì, a Bocca Serriola c'è un fotografo. <strong>FotoMoto.Click</strong> fotografa
+  i motociclisti in transito sul valico ogni weekend di stagione: le foto sono online, con luogo,
+  data e ora, e scaricabili in alta risoluzione entro 24 ore. Qui trovi la strada, i due versanti,
+  il punto di scatto e come recuperare le tue foto.</p>
+  <a class="cta" href="/cerca-foto-archivio/">Trova le tue foto →</a>
+  <a class="cta secondary" href="/foto/bocca-serriola/">Vedi le sessioni</a>
+  <small>Valico sulla SS257 Apecchiese, tra Città di Castello (PG) e Apecchio (PU) · Umbria ↔ Marche</small>
+</div></header>
+
+<main class="wrap">
+
+  <!-- STAT STRIP -->
+  <div class="stats">
+    <div class="stat"><b>730 m</b><span>quota s.l.m.</span></div>
+    <div class="stat"><b>48.000+</b><span>moto fotografate qui</span></div>
+    <div class="stat"><b>2</b><span>regioni collegate</span></div>
+    <div class="stat"><b>&lt;24 h</b><span>foto online dopo lo scatto</span></div>
+  </div>
+
+  <!-- 1. DATI OGGETTIVI -->
+  <section>
+    <h2>Il valico in breve</h2>
+    <p>Bocca Serriola è un valico appenninico a <strong>730 metri</strong> di quota, attraversato
+    dalla <strong>Strada Statale 257 "Apecchiese"</strong>. Segna il confine tra <strong>Umbria e
+    Marche</strong>: sul versante tirrenico scende verso <strong>Città di Castello</strong>
+    (provincia di Perugia), su quello adriatico verso <strong>Apecchio</strong> (provincia di
+    Pesaro e Urbino). Fa da <strong>spartiacque</strong> tra la Val Tiberina e la valle del Biscubio,
+    affluente del Candigliano. I tifernati lo chiamano semplicemente <em>"La Cima"</em>.</p>
+
+    <table class="data">
+      <tr><th>Quota</th><td>730 m s.l.m.</td></tr>
+      <tr><th>Strada</th><td>SS 257 Apecchiese (tratto anche SR 257)</td></tr>
+      <tr><th>Regioni / Province</th><td>Umbria (Perugia) ↔ Marche (Pesaro e Urbino)</td></tr>
+      <tr><th>Comuni ai versanti</th><td>Città di Castello (PG) · Apecchio (PU)</td></tr>
+      <tr><th>Spartiacque</th><td>Val Tiberina / Valle del Biscubio (bacino del Candigliano)</td></tr>
+      <tr><th>Catena</th><td>Appennino umbro-marchigiano (limite con il tosco-emiliano secondo alcune fonti)</td></tr>
+      <tr><th>Coordinate</th><td>≈ 43,53° N, 12,42° E <span class="note">[DA VERIFICARE: coordinate esatte del punto foto su Google&nbsp;Maps/OSM]</span></td></tr>
+    </table>
+  </section>
+
+  <!-- 2. LA STRADA -->
+  <section>
+    <h2>La strada, versante per versante</h2>
+    <p>Il fascino di Bocca Serriola per chi va in moto non sta nell'altitudine — è un passo "basso" —
+    ma nella qualità dei due avvicinamenti. La fonte turistica lo definisce, nel tratto che sale da
+    Città di Castello, <em>"un vero paradiso per i motociclisti"</em>.</p>
+
+    <div class="cols">
+      <div class="card">
+        <span class="pill">Umbria</span><span class="pill">più lungo</span>
+        <h3>Da Città di Castello</h3>
+        <p class="big">15,9 km · +423 m</p>
+        <p>Pendenza media <strong>2,7%</strong>, massima intorno al <strong>6,4%</strong>, con
+        <strong>3 tornanti</strong>. Salita dolce e scorrevole, ideale per un ritmo turistico e per
+        godersi i calanchi marnosi che compaiono a sud del passo.</p>
+      </div>
+      <div class="card">
+        <span class="pill">Marche</span><span class="pill">più ripido</span>
+        <h3>Da Apecchio</h3>
+        <p class="big">7,6 km · +247 m</p>
+        <p>Pendenza media <strong>3,3%</strong>, massima <strong>7,9%</strong>, <strong>1 tornante</strong>.
+        Versante più corto e diretto, tra boschi. Ottimo come discesa dopo aver salito dal lato umbro.</p>
+      </div>
+    </div>
+
+    <h3>Fondo, traffico e sicurezza</h3>
+    <p>È una statale ben tenuta e a percorrenza mista: nei weekend di bella stagione il traffico
+    motociclistico è intenso, quindi attenzione ai sorpassi in curva e ai gruppi. Il fondo è
+    generalmente buono; nelle prime ore del mattino e dopo la pioggia le zone in ombra e in prossimità
+    dei calanchi possono restare umide. Guida con margine: qui la bellezza invita ad accelerare, ma è
+    una strada aperta, con mezzi agricoli e residenti.</p>
+  </section>
+
+  <!-- 3. PUNTO FOTO -->
+  <div class="highlight">
+    <h2>Il punto foto: dove ti fotografiamo</h2>
+    <p>FotoMoto.Click è posizionato sul valico in un punto scelto per luce e leggibilità della moto,
+    dove la strada permette di riprenderti in piega e in sicurezza, senza mai interferire con la
+    guida. Ogni scatto viene taggato con <strong>luogo, data e ora esatta</strong> del passaggio:
+    è così che ritrovi la tua moto tra migliaia di foto in pochi secondi.</p>
+    <p><span class="note" style="background:#20344f;border-color:#33507a;color:#cfe0ff">[DA POPOLARE:
+    descrizione precisa del punto — km, versante, riferimento visibile — e foto del cartello/QR se presente]</span></p>
+    <p style="margin-bottom:0"><a href="/cerca-foto-archivio/"><strong>→ Cerca la tua foto per data</strong></a></p>
+  </div>
+
+  <!-- 4. STAGIONALITA -->
+  <section>
+    <h2>Quando andare (e quando ci siamo)</h2>
+    <p>La stagione moto su Bocca Serriola va indicativamente da <strong>aprile a settembre/ottobre</strong>,
+    con i weekend di sole come giornate di punta. Essendo a 730 m, il valico raramente chiude per neve,
+    ma in inverno e nelle giornate di maltempo il transito cala drasticamente. Noi fotografiamo nei
+    weekend di stagione: controlla la pagina <a href="/dove-siamo/">Dove siamo questo weekend</a> per
+    sapere se saremo sul passo.</p>
+    <p class="note">[DA POPOLARE: calendario/stagionalità reale delle uscite FMC su questo passo]</p>
+  </section>
+
+  <!-- 5. DATI ARCHIVIO -->
+  <section>
+    <h2>Bocca Serriola in numeri</h2>
+    <p>Dal marzo 2025 FotoMoto.Click ha fotografato <strong>oltre 48.000 passaggi di moto</strong> su
+    questo solo valico: è di gran lunga il passo più documentato del nostro archivio. Ogni foto è
+    un'osservazione reale, datata e oraria, del traffico motociclistico sul passo — un dato che nessun
+    altro possiede.</p>
+    <div class="stats" style="margin-top:10px">
+      <div class="stat"><b>48.000+</b><span>foto a Bocca Serriola</span></div>
+      <div class="stat"><b>[DA DATI]</b><span>ora di punta dei passaggi</span></div>
+      <div class="stat"><b>[DA DATI]</b><span>weekend più affollato</span></div>
+      <div class="stat"><b>dal 2025</b><span>copertura continuativa</span></div>
+    </div>
+    <p class="note">[DA POPOLARE dal dataset: ora di punta, giorno/mese più trafficato, primo e ultimo
+    weekend di stagione — calcolabili dai metadati foto. Vedi master audit §13.2. Non inserire numeri
+    non calcolati.]</p>
+  </section>
+
+  <!-- 6. GALLERIA -->
+  <section>
+    <h2>Gli scatti migliori dal passo</h2>
+    <p>Una selezione curata dei nostri scatti a Bocca Serriola. Ogni immagine ha una didascalia reale
+    (moto, ora, condizioni) — sono queste le foto indicizzabili in Google Immagini.</p>
+    <div class="gallery">
+      <div class="ph">foto curata 1<br>caption reale</div>
+      <div class="ph">foto curata 2</div>
+      <div class="ph">foto curata 3</div>
+      <div class="ph">foto curata 4</div>
+      <div class="ph">foto curata 5</div>
+      <div class="ph">foto curata 6</div>
+      <div class="ph">foto curata 7</div>
+      <div class="ph">foto curata 8</div>
+    </div>
+    <p class="note">[DA POPOLARE: 20–30 scatti migliori con alt/caption unici (moto+ora+condizioni) e
+    ImageObject "Licenziabile" — vedi execution-kit/schema/image-licensable.jsonld.html]</p>
+  </section>
+
+  <!-- 7. DINTORNI -->
+  <section>
+    <h2>Cosa c'è intorno al passo</h2>
+    <p>Bocca Serriola si inserisce in un itinerario ricco: la Val Tiberina umbra e l'alto Metauro
+    marchigiano offrono soste, borghi e strade da collegare in giornata.</p>
+    <div class="around">
+      <div class="card"><h3>Versante umbro</h3><p>Città di Castello e la Val Tiberina: centro storico,
+      punti sosta e distributori sulla direttrice per Perugia.</p></div>
+      <div class="card"><h3>Versante marchigiano</h3><p>Apecchio ("città della birra" e dei fossili) e
+      l'alto Metauro, verso Urbino e le Cesane.</p></div>
+      <div class="card"><h3>Da collegare</h3><p>Bocca Trabaria e i valichi vicini per un anello tra
+      Umbria, Marche e Toscana.</p></div>
+    </div>
+    <p class="note">[DA POPOLARE con nomi reali e verificati: bar/rifugio al passo, distributori,
+    officine e concessionarie locali — utili anche per accordi di link locale, master audit §6.3-F]</p>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section>
+    <h2>Domande frequenti</h2>
+    <details open>
+      <summary>C'è un fotografo che fotografa le moto a Bocca Serriola?</summary>
+      <p>Sì. FotoMoto.Click fotografa i motociclisti in transito sul valico nei weekend di stagione.
+      Le foto vengono pubblicate online entro 24 ore, con luogo, data e ora, e sono acquistabili e
+      scaricabili in alta risoluzione senza watermark.</p>
+    </details>
+    <details>
+      <summary>Mi hanno fotografato in moto: dove trovo la mia foto?</summary>
+      <p>Vai su <a href="/cerca-foto-archivio/">Cerca le tue foto</a>, seleziona Bocca Serriola e la
+      data del tuo passaggio. Le foto sono ordinate per giorno e ora, così ritrovi la tua moto in
+      pochi secondi.</p>
+    </details>
+    <details>
+      <summary>Quanto è alto il valico di Bocca Serriola?</summary>
+      <p>730 metri sul livello del mare. È attraversato dalla SS257 Apecchiese e collega Città di
+      Castello (Umbria) ad Apecchio (Marche).</p>
+    </details>
+    <details>
+      <summary>Qual è il versante più bello per la moto?</summary>
+      <p>Entrambi hanno il loro carattere: da Città di Castello la salita è più lunga e scorrevole
+      (15,9 km, 3 tornanti), da Apecchio più corta e ripida (7,6 km, max 7,9%). Molti salgono dal lato
+      umbro e scendono su quello marchigiano.</p>
+    </details>
+    <details>
+      <summary>Quando ci siete sul passo?</summary>
+      <p>Nei weekend di stagione (indicativamente aprile–ottobre). Controlla
+      <a href="/dove-siamo/">Dove siamo questo weekend</a> per la programmazione aggiornata.</p>
+    </details>
+  </section>
+
+  <!-- FINAL CTA -->
+  <div class="finalcta">
+    <h2>Sei passato in moto da Bocca Serriola?</h2>
+    <p>Cerca il tuo scatto per data e ora. Consegna immediata, alta risoluzione, senza watermark.</p>
+    <a class="cta" href="/cerca-foto-archivio/">Trova le tue foto →</a>
+  </div>
+
+</main>
+
+<footer><div class="wrap">
+  © FotoMoto.Click — Fotografia motociclistica sui passi dell'Appennino centrale.
+  Dati geografici: Wikipedia, climbfinder (verificati 26-07-2026).
+</div></footer>
+
+<!-- ============================================================
+     SCHEMA JSON-LD — Place/Mountain + TouristAttraction + FAQPage + Breadcrumb
+     Collega Bocca Serriola come entità al Knowledge Graph (sameAs Wikipedia/Wikidata/OSM).
+     ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":["Mountain","TouristAttraction","Place"],
+      "@id":"https://fotomoto.click/passi/bocca-serriola/#place",
+      "name":"Valico di Bocca Serriola",
+      "alternateName":"La Cima",
+      "description":"Valico appenninico a 730 m tra Umbria e Marche, sulla SS257 Apecchiese, tra Città di Castello e Apecchio. Meta per motociclisti.",
+      "elevation":"730",
+      "geo":{"@type":"GeoCoordinates","latitude":43.5333,"longitude":12.4200},
+      "containedInPlace":[
+        {"@type":"AdministrativeArea","name":"Provincia di Perugia"},
+        {"@type":"AdministrativeArea","name":"Provincia di Pesaro e Urbino"}
+      ],
+      "sameAs":[
+        "https://it.wikipedia.org/wiki/Bocca_Serriola"
+      ],
+      "photo":{"@type":"ImageObject","contentUrl":"https://fotomoto.click/wp-content/uploads/<copertina-bocca-serriola>.webp"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://fotomoto.click/passi/bocca-serriola/#faq",
+      "mainEntity":[
+        {"@type":"Question","name":"C'è un fotografo che fotografa le moto a Bocca Serriola?",
+          "acceptedAnswer":{"@type":"Answer","text":"Sì. FotoMoto.Click fotografa i motociclisti in transito sul valico nei weekend di stagione. Le foto sono online entro 24 ore, con luogo, data e ora, acquistabili in alta risoluzione senza watermark."}},
+        {"@type":"Question","name":"Mi hanno fotografato in moto: dove trovo la mia foto?",
+          "acceptedAnswer":{"@type":"Answer","text":"Su fotomoto.click, nella sezione Cerca le tue foto: seleziona Bocca Serriola e la data del passaggio. Le foto sono ordinate per giorno e ora."}},
+        {"@type":"Question","name":"Quanto è alto il valico di Bocca Serriola?",
+          "acceptedAnswer":{"@type":"Answer","text":"730 metri sul livello del mare, sulla SS257 Apecchiese, tra Città di Castello (Umbria) e Apecchio (Marche)."}},
+        {"@type":"Question","name":"Qual è il versante più bello per la moto?",
+          "acceptedAnswer":{"@type":"Answer","text":"Da Città di Castello la salita è più lunga e scorrevole (15,9 km, 3 tornanti); da Apecchio più corta e ripida (7,6 km, max 7,9%)."}},
+        {"@type":"Question","name":"Quando è presente il fotografo sul passo?",
+          "acceptedAnswer":{"@type":"Answer","text":"Nei weekend di stagione, indicativamente da aprile a ottobre. La programmazione aggiornata è nella pagina Dove siamo questo weekend."}}
+      ]
+    },
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://fotomoto.click/"},
+        {"@type":"ListItem","position":2,"name":"Passi","item":"https://fotomoto.click/passi/"},
+        {"@type":"ListItem","position":3,"name":"Bocca Serriola","item":"https://fotomoto.click/passi/bocca-serriola/"}
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
