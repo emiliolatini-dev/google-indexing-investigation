@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mockup modulo "Scopri il passo" — landing Bocca Serriola</title>
+
+<!-- ============================================================
+     MOCKUP del MODULO INFO da iniettare nella landing /foto/{loc}/ esistente.
+     NON è una pagina nuova: è la sezione "Scopri il passo" che si aggiunge
+     alla landing attuale (che resta transazionale-prima). Stile allineato al
+     tema dark del sito reale. Contenuto TUTTO nell'HTML (accordion via <details>,
+     crawlabile) — niente modale JS. Dati Bocca Serriola verificati (26-07-2026).
+     Alimentabile per ogni località dal data layer content/passi-data.json.
+     ============================================================ -->
+
+<style>
+  :root{
+    --bg:#0b0b0d; --panel:#151517; --panel2:#1c1c20; --line:rgba(255,255,255,.09);
+    --line2:rgba(255,255,255,.16); --ink:#f4f5f7; --muted:#9aa0aa; --accent:#ff5a1f;
+    --radius:16px; --maxw:1180px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.6}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  a{color:#8fb8ff;text-decoration:none} a:hover{text-decoration:underline}
+  h2{font-size:2.1rem;font-weight:800;letter-spacing:-.02em;margin:.2em 0 .1em}
+  h3{font-size:1.05rem;margin:0 0 .3em}
+
+  /* banner esplicativo del mock */
+  .mockbar{background:#12233d;color:#cfe0ff;font-size:.82rem;padding:10px 28px;border-bottom:1px solid #24406b}
+
+  /* finto contesto: coda della landing esistente */
+  .ctx{padding:40px 0 6px;opacity:.5}
+  .ctx h2{font-size:2rem}
+  .ctx .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:16px}
+  .ctx .cards div{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;height:96px}
+  .dashed{border:1px dashed var(--line2);border-radius:var(--radius);text-align:center;color:var(--muted);
+    padding:10px;margin:26px 0 0;font-size:.8rem}
+
+  /* ===== IL MODULO ===== */
+  .module{padding:20px 0 56px}
+  .eyebrow{display:inline-block;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;
+    color:var(--accent);margin-bottom:6px}
+  .lead{font-size:1.12rem;color:#d9dce1;max-width:70ch;margin:.4em 0 0}
+
+  /* fact bar */
+  .facts{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 8px}
+  .fact{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.9rem}
+  .fact b{color:#fff} .fact span{color:var(--muted)}
+
+  /* accordion */
+  details{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);margin:12px 0;overflow:hidden}
+  details[open]{background:var(--panel2)}
+  summary{cursor:pointer;list-style:none;padding:18px 22px;font-weight:700;font-size:1.12rem;
+    display:flex;align-items:center;justify-content:space-between;gap:12px}
+  summary::-webkit-details-marker{display:none}
+  summary .chev{color:var(--accent);font-size:1.4rem;line-height:1;transition:transform .2s}
+  details[open] summary .chev{transform:rotate(45deg)}
+  .body{padding:0 22px 22px}
+  .body p{color:#d4d7dd;margin:.2em 0 1em}
+
+  /* versanti */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .vcard{background:#101012;border:1px solid var(--line);border-radius:12px;padding:16px}
+  .vcard .big{font-size:1.3rem;font-weight:800;color:#fff}
+  .tag{display:inline-block;background:rgba(255,90,31,.14);color:#ff8a5c;font-size:.68rem;font-weight:700;
+    padding:3px 9px;border-radius:999px;margin-right:5px;text-transform:uppercase;letter-spacing:.05em}
+
+  /* data table */
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:left;padding:9px 4px;border-bottom:1px solid var(--line);vertical-align:top;font-size:.95rem}
+  th{color:var(--muted);font-weight:600;width:38%}
+
+  /* faq inside */
+  .qa{border-top:1px solid var(--line);padding:14px 0}
+  .qa:first-child{border-top:0}
+  .qa b{display:block;margin-bottom:4px}
+
+  .cta{display:inline-block;background:var(--accent);color:#fff;font-weight:700;padding:12px 22px;border-radius:999px;margin-top:6px}
+  .mininote{font-size:.75rem;color:#8a5a3a;background:#241a12;border:1px solid #3a2a1c;border-radius:8px;padding:4px 9px;display:inline-block;margin-top:8px}
+
+  @media(max-width:760px){
+    h2{font-size:1.6rem}
+    .cols{grid-template-columns:1fr}
+    .ctx .cards{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<div class="mockbar">⬇ Mockup: come apparirebbe il modulo <b>"Scopri il passo"</b> iniettato nella landing
+<b>/foto/bocca-serriola/</b> — sotto la ricerca/sessioni, sopra il footer. La landing resta invariata; questo si aggiunge.</div>
+
+<!-- finto contesto: pezzo di landing esistente, sfumato -->
+<div class="wrap ctx">
+  <h2>Perché usare FotoMoto.Click</h2>
+  <div class="cards"><div></div><div></div><div></div><div></div></div>
+  <div class="dashed">▲ contenuto esistente della landing (ricerca, sessioni, gallerie, perché noi)</div>
+</div>
+
+<!-- ===== MODULO INFO (nuovo) ===== -->
+<section class="wrap module" id="scopri-il-passo">
+  <span class="eyebrow">Scopri il passo</span>
+  <h2>Bocca Serriola, in sella</h2>
+  <p class="lead">Un valico dell'Appennino umbro-marchigiano diventato un punto d'incontro per chi
+  gira in moto nel weekend. Ecco la strada, i due versanti e cosa aspettarti — poi trovi i tuoi scatti
+  qui sopra.</p>
+
+  <!-- fatti duri, qui è la loro sede (non ripetuti altrove nella landing) -->
+  <div class="facts">
+    <div class="fact"><b>730 m</b> <span>quota</span></div>
+    <div class="fact"><b>SS257</b> <span>Apecchiese</span></div>
+    <div class="fact"><b>Umbria ↔ Marche</b></div>
+    <div class="fact"><b>2 versanti</b> <span>15,9 km / 7,6 km</span></div>
+  </div>
+
+  <!-- ACCORDION: contenuto tutto nell'HTML, collassato via CSS (crawlabile) -->
+  <details open>
+    <summary>La strada, versante per versante <span class="chev">＋</span></summary>
+    <div class="body">
+      <p>Il fascino di Bocca Serriola non sta nell'altitudine — è un passo "basso" — ma nella qualità
+      dei due avvicinamenti. Fonti turistiche definiscono il tratto che sale da Città di Castello
+      <em>"un vero paradiso per i motociclisti"</em>.</p>
+      <div class="cols">
+        <div class="vcard">
+          <span class="tag">Umbria</span><span class="tag">più lungo</span>
+          <h3>Da Città di Castello</h3>
+          <p class="big">15,9 km · +423 m</p>
+          <p style="color:#aeb2b9;font-size:.92rem;margin:0">Media 2,7%, massima ~6,4%, 3 tornanti.
+          Salita dolce e scorrevole, perfetta per prendere confidenza prima del valico.</p>
+        </div>
+        <div class="vcard">
+          <span class="tag">Marche</span><span class="tag">più ripido</span>
+          <h3>Da Apecchio</h3>
+          <p class="big">7,6 km · +247 m</p>
+          <p style="color:#aeb2b9;font-size:.92rem;margin:0">Media 3,3%, massima 7,9%, 1 tornante.
+          Versante corto e diretto tra i boschi. Ottimo come discesa dopo il lato umbro.</p>
+        </div>
+      </div>
+      <p style="margin-top:14px"><b>Fondo e sicurezza.</b> Statale ben tenuta; nei weekend di bella
+      stagione il traffico moto è intenso — attenzione ai sorpassi in curva. Nelle prime ore e dopo
+      la pioggia, i tratti in ombra restano umidi. Strada aperta: guida con margine.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>Il valico in breve <span class="chev">＋</span></summary>
+    <div class="body">
+      <p>Più che per la quota, Bocca Serriola conta per dove sta: è la soglia tra la Val Tiberina e la
+      valle del Biscubio, sul crinale tra versante tirrenico e adriatico. I tifernati lo chiamano
+      <em>«La Cima»</em>; il nome deriverebbe dal latino <em>serrula</em> — "piccola sega" — per il
+      legname che di qui scendeva a valle lungo il Tevere.</p>
+      <table>
+        <tr><th>Quota</th><td>730 m s.l.m.</td></tr>
+        <tr><th>Strada</th><td>SS 257 Apecchiese</td></tr>
+        <tr><th>Regioni / Province</th><td>Umbria (Perugia) ↔ Marche (Pesaro e Urbino)</td></tr>
+        <tr><th>Comuni</th><td>Città di Castello (PG) · Apecchio (PU)</td></tr>
+        <tr><th>Spartiacque</th><td>Val Tiberina / Valle del Biscubio</td></tr>
+        <tr><th>Coordinate</th><td>≈ 43,53° N, 12,42° E <span class="mininote">verificare punto foto esatto</span></td></tr>
+      </table>
+    </div>
+  </details>
+
+  <details>
+    <summary>Il punto foto e quando ci siamo <span class="chev">＋</span></summary>
+    <div class="body">
+      <p>Siamo posizionati sul valico in un punto scelto per luce e leggibilità della moto, dove la
+      strada permette di riprenderti in piega e in sicurezza. Ogni scatto è taggato con <b>luogo, data
+      e ora esatta</b>: così ritrovi la tua moto tra migliaia di foto in pochi secondi.</p>
+      <p>La stagione va indicativamente da <b>aprile a ottobre</b>, con i weekend di sole come giornate
+      di punta. Controlla <a href="/dove-siamo/">Dove siamo questo weekend</a> per sapere se saremo sul passo.</p>
+      <span class="mininote">DA POPOLARE: descrizione precisa del punto (km/versante/riferimento)</span>
+    </div>
+  </details>
+
+  <details>
+    <summary>Domande frequenti <span class="chev">＋</span></summary>
+    <div class="body">
+      <div class="qa"><b>C'è un fotografo che fotografa le moto a Bocca Serriola?</b>
+        Sì. FotoMoto.Click è sul valico nei weekend di stagione; le foto sono online entro 24 ore, con
+        luogo, data e ora, in alta risoluzione senza watermark.</div>
+      <div class="qa"><b>Quanto è alto il valico?</b>
+        730 metri, sulla SS257 Apecchiese, tra Città di Castello (Umbria) e Apecchio (Marche).</div>
+      <div class="qa"><b>Qual è il versante più bello per la moto?</b>
+        Da Città di Castello è più lungo e scorrevole (15,9 km, 3 tornanti); da Apecchio più corto e
+        ripido (7,6 km, max 7,9%). Molti salgono dal lato umbro e scendono su quello marchigiano.</div>
+    </div>
+  </details>
+
+  <div style="margin-top:20px"><a class="cta" href="#top">↑ Trova le tue foto di Bocca Serriola</a></div>
+</section>
+
+<!-- Schema: Place/Mountain + FAQPage sulla stessa landing -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":["Mountain","TouristAttraction","Place"],
+     "@id":"https://fotomoto.click/foto/bocca-serriola/#place",
+     "name":"Valico di Bocca Serriola","alternateName":"La Cima",
+     "description":"Valico appenninico a 730 m tra Umbria e Marche, sulla SS257 Apecchiese, tra Città di Castello e Apecchio.",
+     "elevation":"730","geo":{"@type":"GeoCoordinates","latitude":43.5333,"longitude":12.4200},
+     "sameAs":["https://it.wikipedia.org/wiki/Bocca_Serriola"]},
+    {"@type":"FAQPage","@id":"https://fotomoto.click/foto/bocca-serriola/#faq",
+     "mainEntity":[
+       {"@type":"Question","name":"C'è un fotografo che fotografa le moto a Bocca Serriola?",
+        "acceptedAnswer":{"@type":"Answer","text":"Sì. FotoMoto.Click è sul valico nei weekend di stagione; le foto sono online entro 24 ore, con luogo, data e ora, in alta risoluzione senza watermark."}},
+       {"@type":"Question","name":"Quanto è alto il valico di Bocca Serriola?",
+        "acceptedAnswer":{"@type":"Answer","text":"730 metri, sulla SS257 Apecchiese, tra Città di Castello (Umbria) e Apecchio (Marche)."}},
+       {"@type":"Question","name":"Qual è il versante più bello per la moto?",
+        "acceptedAnswer":{"@type":"Answer","text":"Da Città di Castello è più lungo e scorrevole (15,9 km, 3 tornanti); da Apecchio più corto e ripido (7,6 km, max 7,9%)."}}
+     ]}
+  ]
+}
+</script>
+
+</body>
+</html>
