@@ -1,7 +1,10 @@
-# Template dinamico `/passi/{loc}/` — spec campi + data layer
+# Contenuti passo per località — spec campi + data layer
 
-> Come scalare la pagina passo (mockup: `content/passi-bocca-serriola/`) a tutte le località
-> **senza** creare thin/duplicate. Rif. master audit §3.2, §6.2. Dati in `passi-data.json`.
+> Come rendere ogni landing località `/foto/{loc}/` unica e utile con un **modulo "Scopri il passo"**,
+> senza thin/duplicate.
+> **Delivery scelta (26-07-2026):** modulo nella landing esistente (mockup `content/landing-info-module/`),
+> NON pagine `/passi/` separate. Contenuto standalone di riferimento: `content/passi-bocca-serriola/`.
+> Dati in `passi-data.json`. Rif. master audit §3.2, §6.2.
 
 ## Principio
 Un **solo template dinamico** + un **data layer per località**. La struttura (layout, sezioni,
@@ -44,16 +47,21 @@ Campi in `passi-data.json`: `quota_m`, `strada`, `regioni`, `province`, `comuni`
 tornanti), `carattere` (2-4 frasi uniche sul passo), `dintorni`, `punto_foto`, `note_stagionalita`,
 `fonti[]`. **Già pre-compilati per tutte e 5 le località** con ricerca sorgente (vedi JSON).
 
-## Implementazione WordPress
-- **Custom Post Type `passo`** (o gruppo ACF sulla tassonomia località esistente) con i campi del
-  livello C. Un record per passo.
-- **Template `single-passo.php`** (o template Elementor dinamico) che renderizza: campi C +
-  galleria/conteggio (A) + sezione numeri (B, se pronta).
-- **URL:** `/passi/{slug}/` — nuovo livello **informativo**, che *affianca* `/foto/{slug}/`
-  (transazionale, già ottimo). NON fondere i due: intento diverso, così non si cannibalizzano.
-  Interlink reciproco.
-- **Schema:** `Place`/`Mountain`/`TouristAttraction` + `FAQPage` + `BreadcrumbList` (vedi mockup).
-  Per Terminillo usare `Mountain` (vetta) + `SkiResort` opzionale; è un massiccio, non un valico.
+## Implementazione WordPress — DECISIONE: modulo nella landing (non pagina separata)
+Scelta architetturale (26-07-2026): invece di creare pagine `/passi/{slug}/` separate, si
+**arricchisce la landing località esistente `/foto/{slug}/`** con un modulo "Scopri il passo".
+Perché: a 5 località una sola pagina forte batte due pagine che si contendono lo stesso intento;
+meno lavoro, nessuna cannibalizzazione, e i contenuti informativi atterrano dove c'è già autorità.
+Le pagine `/passi/` restano un'opzione solo se in futuro si scala a molte località (§6.3-E).
+
+- **Dati:** gruppo di campi **ACF** (livello C) agganciato alla tassonomia località, popolato da
+  `passi-data.json`. Un record per località.
+- **Template:** il modulo "Scopri il passo" nel template della landing `/foto/{slug}/`, **sotto**
+  ricerca/sessioni/gallerie. Contenuto in **accordion `<details>`**: testo nell'HTML e crawlabile,
+  **NON** modale JS (altrimenti Google non lo vede). Mockup: `content/landing-info-module/`.
+- **Schema:** `Place`/`Mountain`/`TouristAttraction` + `FAQPage` sulla stessa landing. Per
+  Terminillo `Mountain` (+ `SkiResort` opzionale): è un massiccio, non un valico.
+- La landing resta **transazionale-prima**: ricerca e gallerie non si spostano.
 
 ## Rischio duplicati — soglia
 A **5 località** con geografia genuinamente diversa + numeri d'archivio esclusivi, il rischio
