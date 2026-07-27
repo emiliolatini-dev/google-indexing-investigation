@@ -1,23 +1,46 @@
 # robots.txt — FotoMoto.Click
-# Versione corretta — kit di esecuzione SEO, 26-07-2026
-# Rif. master audit §4.1 e §11.1. Sostituisce il robots.txt attuale.
+# v2 — 27-07-2026. Sostituisce integralmente il robots.txt attuale.
+# Rif. master audit §4.1 e §11.1 + evidenze E-015 (log server e export 404 GSC).
 #
-# COSA CAMBIA rispetto all'attuale:
-#  1. RIMOSSO gruppo "User-agent: Googlebot-Image" — sostituiva integralmente
-#     il gruppo * per quel bot (RFC 9309: vale un solo gruppo per crawler),
-#     facendogli perdere tutte le altre direttive. Era inutile (uploads gia' Allow).
-#  2. RIMOSSO "User-agent: AdsBot / Disallow: /" — "AdsBot" NON e' un token valido
-#     di Google (i reali sono AdsBot-Google / AdsBot-Google-Mobile). Se interpretato
-#     per prefisso puo' bloccare il controllo qualita' delle landing di Google Ads.
-#  3. AI CRAWLER — decisione consapevole (§11.1): testo APERTO, file immagine PROTETTI.
-#     GPTBot / Google-Extended / CCBot ora possono leggere l'HTML ma NON /wp-content/uploads/.
-#     Motivo: vendi file ad alta risoluzione dietro paywall; il testo e' marketing e ti
-#     rende citabile da ChatGPT/Gemini/Perplexity. Per RI-BLOCCARE del tutto, rimetti
-#     "Disallow: /" sotto ciascuno di quei tre user-agent.
-#  4. AGGIUNTE trappole di crawl: ?add-to-cart, ?orderby, /feed/.
-#     NB: la paginazione /page/N/ NON e' bloccata qui di proposito — va gestita a livello
-#     server con canonical/404 (vedi execution-kit/pagination-fix.md), cosi' Google puo'
-#     leggere il canonical invece di trovare l'URL semplicemente vietato.
+# COSA CAMBIA rispetto a quello online:
+#
+#  1. RIMOSSO il gruppo "User-agent: Googlebot-Image".
+#     Un gruppo con nome sostituisce integralmente il gruppo * per quel crawler
+#     (RFC 9309: vale un solo gruppo per bot). Googlebot-Image perdeva quindi tutte
+#     le altre direttive. Ed era inutile: /wp-content/uploads/ è già in Allow.
+#
+#  2. RIMOSSO "User-agent: AdsBot / Disallow: /".
+#     "AdsBot" non è un token valido di Google — i reali sono AdsBot-Google e
+#     AdsBot-Google-Mobile. Se interpretato per prefisso può bloccare il controllo
+#     di qualità delle landing di Google Ads.
+#
+#  3. AGGIUNTO "Disallow: /*?add-to-cart=".
+#     [MISURATO] È il 12% dei 1.129 URL in "Non trovata (404)" di GSC: ~135 URL.
+#     Non è un residuo storico — sono link che il sito emette adesso, quindi
+#     continuerebbero a nascerne. Il blocco ferma il crawl; per chiudere la sorgente
+#     serve anche rel="nofollow" sui pulsanti di aggiunta al carrello.
+#
+#  4. AGGIUNTO "Disallow: /*?remove_item=" e il blocco delle pagine transazionali.
+#     [MISURATO] Nell'access log del 27/07 Googlebot ha eseguito
+#       GET /carrello/?remove_item=6c91e2bfb5160ae267d4f353cf706f52&_wpnonce=... -> 200
+#     Googlebot stava crawlando URL di modifica del carrello. Carrello, checkout,
+#     account ed express-checkout non hanno alcun motivo di essere scansionati.
+#
+#  5. AGGIUNTE trappole di crawl: ?orderby, /feed/, /embed/.
+#     NB: la paginazione /page/N/ NON è bloccata qui di proposito — va gestita lato
+#     server con canonical o 404 (execution-kit/09-pagination-fix.md), così Google
+#     può leggere il canonical invece di trovare l'URL semplicemente vietato.
+#
+#  6. TOLTA la riga "Sitemap: .../news-sitemap.xml": quella sitemap non esiste ancora.
+#     Dichiarare una sitemap inesistente aggiunge solo rumore.
+#
+#  7. DA DECIDERE — crawler AI. Sotto è attiva l'opzione "testo aperto, immagini
+#     protette" (§11.1): GPTBot / Google-Extended / CCBot possono leggere l'HTML ma
+#     non /wp-content/uploads/. Motivo: i file ad alta risoluzione sono il prodotto,
+#     il testo è marketing e rende il sito citabile dagli assistenti.
+#     Costo misurato del blocco attuale: 2 sessioni/settimana da "AI Assistant" in GA4.
+#     PER RI-BLOCCARE DEL TUTTO: sostituire, sotto ciascuno dei tre, le due righe
+#     "Allow: /" + "Disallow: /wp-content/uploads/" con una sola "Disallow: /".
 
 User-agent: *
 Disallow: /wp-admin/
@@ -30,12 +53,18 @@ Disallow: /?s=
 Disallow: /page/*/?s=
 Disallow: /search/
 Disallow: /*?add-to-cart=
+Disallow: /*?remove_item=
 Disallow: /*?orderby=
 Disallow: /*?add_to_wishlist=
+Disallow: /carrello/
+Disallow: /checkout/
+Disallow: /pagamento/
+Disallow: /express-checkout/
+Disallow: /mio-account/
 Disallow: /*/feed/
 Disallow: /*/embed/
 
-# --- Crawler AI: testo consentito, file immagine esclusi (vedi nota 3) ---
+# --- Crawler AI: testo consentito, file immagine esclusi (vedi nota 7) ---
 User-agent: GPTBot
 Allow: /
 Disallow: /wp-content/uploads/
@@ -49,4 +78,3 @@ Allow: /
 Disallow: /wp-content/uploads/
 
 Sitemap: https://fotomoto.click/sitemap_index.xml
-Sitemap: https://fotomoto.click/news-sitemap.xml
