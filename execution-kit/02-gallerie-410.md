@@ -92,6 +92,42 @@ In GSC → Indicizzazione → Pagine → "Non trovata (404)" → **Convalida cor
 precedente è fallita il 01/07 perché il problema non era stato toccato; ora c'è un segnale
 esplicito da far verificare.
 
+## ⚠️ Dipendenza da conoscere: la radice `/gallerie/`
+
+L'hook di questo mu-plugin agisce su `template_redirect` a **priorità 0**, quindi arriva prima
+del modulo Redirections di Rank Math. Per la **radice** `/gallerie/` — che Rank Math
+redirigeva verso `/gallerie-foto/` — questo significa che il 410 vince e il redirect non
+scatta mai. È una regressione introdotta il 27-07-2026 e non rilevata subito, perché la
+verifica post-deploy aveva controllato i prodotti, la home, la sessione e il 404 generico,
+**ma non la radice del namespace**.
+
+Risolta il 27-07-2026 a livello di server, che agisce prima di WordPress — e che risolve
+insieme anche la catena a due hop:
+
+```apache
+# in .htaccess, nel blocco "Redirect vecchia pagina gallerie", prima di # BEGIN WordPress
+RewriteRule ^gallerie/?$ /passi-e-valichi/ [R=301,L]
+```
+
+`^gallerie/?$` è ancorato: matcha **solo** la radice. Senza `$` finale distruggerebbe sia i
+301 verso i prodotti vivi sia i 410 di questo mu-plugin.
+
+**Se un giorno quella riga viene rimossa dall'`.htaccess`, la radice `/gallerie/` torna a
+rispondere 410.** Le due cose vanno lette insieme.
+
+> Nota operativa: dopo la modifica dell'`.htaccess`, LiteSpeed può impiegare qualche istante a
+> rileggerlo. Una prima verifica che mostra il vecchio comportamento non significa che la
+> regola sia sbagliata — va ripetuta.
+
+## Stato finale verificato (27-07-2026)
+
+| URL | Risposta |
+|---|---|
+| `/gallerie/` · `/gallerie-foto/` | 301 → `/passi-e-valichi/` (**un solo hop**) |
+| `/gallerie/{slug}/` con prodotto esistente | 301 → `/foto/{loc}/{slug}/` |
+| `/gallerie/{slug}/` senza prodotto | 410, 9 byte |
+| 404 generico | 404 (l'hook agisce solo su `/gallerie/`) |
+
 ## Non fare
 
 Non rimuovere il redirect `/gallerie/` → prodotto: serve ai 301 che funzionano e alle foto
