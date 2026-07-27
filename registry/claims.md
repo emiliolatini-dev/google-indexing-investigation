@@ -22,6 +22,13 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 | F-012 | Googlebot recupera l'HTML del sito in tempo reale: il test live GSC su una landing sessione restituisce "URL disponibile per Google"; curl con UA Googlebot riceve HTTP 200 su home e sitemap. | E-013 | active | 2026-07-26 |
 | F-013 | `sitemap_index.xml` è XML valido e leggibile (no BOM, UTF-8, 244 voci): Bing l'ha crawlata con Status "Success" il 25/07/2026 scoprendo 58.400 URL. Il "Impossibile leggere" di Google è lato Google, non un difetto del file. | E-013 | active | 2026-07-26 |
 | F-014 | Il 403 osservato dal fetcher in cloud era per IP datacenter (Cloudflare), non applicabile al Googlebot verificato. Dopo il re-invio del 26/07 lo stato GSC è passato da "Impossibile recuperare/mai letta" a "Ultima lettura 26/07 / Impossibile leggere". | E-013 | active | 2026-07-26 |
+| F-021 | Nei 9 giorni di access log dell'origine (18-27/07/2026) **Googlebot non ha mai richiesto una sitemap**: 0 richieste da `66.249.*`, contro 70-260/giorno di Bingbot. Le uniche 4 richieste di Google sono `Google-InspectionTool` del 26/07 19:27 UTC, tutte con **200**. Cloudflare non cacha le sitemap (`cf-cache-status: DYNAMIC`), quindi ogni richiesta raggiunge l'origine e sarebbe visibile. | E-015 | active | 2026-07-27 |
+| F-022 | `https://fotomoto.click/sitemap.xml` risponde **301** verso `sitemap_index.xml`, non 200. L'esperimento del 27/07 che lo usava come "URL equivalente mai inviato" non è quindi un controllo valido. Voce rimossa da GSC in pari data. | E-015 | active | 2026-07-27 |
+| F-016 | Da IP datacenter il sito restituisce **403** su `/` e su `sitemap.xml`, mentre `robots.txt` risponde 200; dalla rete residenziale dell'utente tutti e tre rispondono 200. Esiste una regola attiva che discrimina per rete/client. | E-015 | active | 2026-07-27 |
+| F-017 | `https://fotomoto.click/sitemap.xml`, URL mai inviato prima e servente lo stesso index, inviato in GSC il 27/07 fallisce entro pochi secondi con "Impossibile leggere", 0 pagine. Uno stato bloccato per singola voce sitemap è escluso. | E-015 | active | 2026-07-27 |
+| F-018 | Le 1.129 pagine "Non trovata (404)" con convalida fallita sono tutte del namespace legacy `/gallerie/fotomotoclick-*`; le 2 richieste "Impossibile raggiungere la pagina" delle statistiche di scansione sono dello stesso namespace, con 34.100 ms di risposta media; `/gallerie/` → `/gallerie-foto/` → `/passi-e-valichi/` è una catena di due redirect. | E-015 | active | 2026-07-27 |
+| F-019 | In GA4, 28 giorni: `purchase` 87 eventi / 84 utenti / 1.238,00 € contro `begin_checkout` ~78 eventi / 53 utenti. Il funnel non è monotòno decrescente: `begin_checkout` è sotto-rilevato. Assenti `view_cart`, `add_shipping_info`, `add_payment_info`. | E-015 | active | 2026-07-27 |
+| F-020 | Su 16 mesi `/gallerie-foto/` (un 301 a due hop) raccoglie 27.098 impressioni e `/contatti/` 20.023, con CTR 3,4% e 0,8% contro il 16,1% del sito. Su `foto moto` (14.818 impr., pos. 3,2) cinque URL del sito compaiono in SERP e solo la home converte. | E-015 | active | 2026-07-27 |
 | F-015 | Il fix dell'header sitemap (`no-store, private` → `public, max-age=300` via filtro `nocache_headers`) è stato applicato e verificato via curl, ma la lettura GSC resta "Impossibile leggere" (0 pagine) su lettura fresca del 27/07. Header ESCLUSO come causa. Cloudflare ESCLUSO (problema antecedente a CF, per il proprietario). Bing legge la stessa sitemap (F-013). Causa ancora aperta. | E-014 | active | 2026-07-27 |
 
 ---
@@ -98,6 +105,69 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 
 ---
 
+### F-021
+
+- **Statement:** Access log dell'origine (`/home/fotomoto.click/logs/`), 9 file giornalieri dal 18 al 27 luglio 2026. Richieste a URL contenenti "sitemap" provenienti da IP Google (`66.249.*`): **0** il 18, 19, 20, 21, 23, 24, 25 e 26 luglio; **4** il 27 luglio, tutte con user-agent `Google-InspectionTool/1.0`, timestamp 26/07 19:27 UTC, tutte con risposta **200 / 2.077 byte**. Nello stesso periodo Bingbot ha effettuato da 70 a 263 richieste di sitemap al giorno. Googlebot è attivo e non ostacolato: nel solo file precedente al 27/07 sono registrate 656 richieste da `66.249.*` con 587 risposte 200, 64 301, 4 404, 1 302, e **nessun 403**. Poiché `cf-cache-status` è `DYNAMIC` su `sitemap_index.xml`, `sitemap.xml` e `page-sitemap1.xml`, Cloudflare non serve queste risorse dalla cache di bordo: ogni richiesta raggiunge l'origine e comparirebbe nel log. Ne segue che **Google non sta richiedendo le sitemap**, e che lo stato "Impossibile recuperare/leggere" mostrato da GSC non è l'esito di una lettura recente.
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §1-quater
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
+### F-022
+
+- **Statement:** `https://fotomoto.click/sitemap.xml` risponde `HTTP 301` con `location: https://fotomoto.click/sitemap_index.xml`, confermato sia da `curl -I` sia dall'access log dell'origine. La misurazione del 27/07 che lo dava per equivalente all'index era stata eseguita con `curl -L`, che segue i redirect e restituisce quindi il contenuto finale mascherando il 301. L'invio di quell'URL in GSC come "controllo su URL vergine" non è un esperimento valido; la voce è stata rimossa da GSC il 27/07.
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §1-quater
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
+### F-016
+
+- **Statement:** Il 27-07-2026, richiedendo le stesse URL dalla rete residenziale dell'utente e da un fetcher su IP datacenter: `robots.txt` → 200 da entrambi; `https://fotomoto.click/` → 200 da rete utente, **403 Forbidden** da datacenter; `https://fotomoto.click/sitemap.xml` → 200 con XML valido da rete utente, **403 Forbidden** da datacenter. Esiste quindi una regola attiva che restituisce 403 ai client su IP datacenter, con `robots.txt` in eccezione esplicita. È la stessa firma osservata nel crawl del 26-07 e mai risolta.
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §1-bis
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
+### F-017
+
+- **Statement:** Con autorizzazione dell'utente è stata inviata in GSC `https://fotomoto.click/sitemap.xml`, URL mai inviato prima, che serve byte per byte lo stesso index di `sitemap_index.xml` (31.615 byte, verificato con curl). Entro pochi secondi la voce riporta "Ultima lettura 27/07/26", 0 pagine, "Impossibile leggere la Sitemap" — identico all'URL storico, lasciato in elenco come controllo. L'ipotesi di uno stato bloccato lato GSC sulla singola voce sitemap è quindi esclusa.
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §1-bis
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
+### F-018
+
+- **Statement:** Il drill-down GSC "Non trovata (404)" (1.129 pagine, convalida avviata 18/06 e fallita 01/07) restituisce esclusivamente URL del pattern `https://fotomoto.click/gallerie/fotomotoclick-*`. Le 2 richieste classificate "Impossibile raggiungere la pagina" nelle statistiche di scansione appartengono allo stesso namespace e hanno tempo medio di risposta 34.100 ms. Verifica HTTP diretta: i prodotti sotto `/gallerie/` rispondono 404; `/gallerie/` risponde 301 verso `/gallerie-foto/`, che a sua volta risponde 301 verso `/passi-e-valichi/`. Le voci N1, N2 e N4 delle evidenze del 26-07 sono quindi lo stesso problema.
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §2
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
+### F-019
+
+- **Statement:** GA4, proprietà `fotomoto.click`, 29/06–26/07/2026: `view_item` 3.122 (485 utenti) → `add_to_cart` 429 (~99 utenti) → `begin_checkout` ~78 (53 utenti) → `purchase` 87 eventi / 84 utenti / 1.238,00 €. `purchase` supera `begin_checkout` sia in eventi sia in utenti, il che è strutturalmente impossibile in un funnel strumentato correttamente: `begin_checkout` è sotto-rilevato. Ordinando gli eventi alfabeticamente la prima riga è `add_to_cart`, quindi `add_payment_info` e `add_shipping_info` non esistono; assenti anche `view_cart` e `remove_from_cart`.
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §5
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
+### F-020
+
+- **Statement:** GSC Rendimento, 16 mesi (08/05/2025–24/07/2026), totali 19.000 clic / 118.000 impressioni / CTR 16,1% / posizione 5,8 / 871 query. `/gallerie-foto/` — che risponde 301 verso `/passi-e-valichi/` — è la 2ª pagina del sito per impressioni con 27.098 e CTR 3,4%; `/contatti/` è la 3ª con 20.023 impressioni e CTR 0,8%. Insieme: 47.121 impressioni a CTR combinato 1,7%. Con filtro query esatta `foto moto` (176 clic, 14.818 impressioni, pos. 3,2) compaiono in SERP `/` (173 clic), `/gallerie-foto/` (7), `/passi-e-valichi/` (1), `/foto/bocca-serriola/` (0 clic, 3.224 impr.), `/contatti/` (0 clic, 3.073 impr.), `/link/` (0).
+- **Evidence:** [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §3
+- **Status:** active
+- **Added:** 2026-07-27
+
+---
+
 ## Observations (O-)
 
 | ID | Statement | Evidence | Status | Added |
@@ -107,6 +177,7 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 | O-003 | La funzione `flush_rank_math_sitemap_cache()` aggiunta al mu-plugin rimuove file fisici, option, transient, esegue `wp_cache_flush()` e LiteSpeed purge. | E-012 | active | 2026-06-26 |
 | O-004 | Il 21-06-2026 è stata eseguita una richiesta di indicizzazione manuale via GSC URL Inspection per la landing della sessione Bocca Serriola 21-06-2026. | E-007 | active | 2026-06-26 |
 | O-005 | A circa 7 giorni dalla pubblicazione, GSC riportava la landing della sessione 21-06-2026 come non presente nell'indice di Google. È stata eseguita una seconda richiesta di indicizzazione. | E-007 | active | 2026-06-26 |
+| O-007 | Fino al 2025 le sessioni più vecchie venivano archiviate in gallerie di sola lettura sotto `/gallerie/`, fuori da WooCommerce. Tornando a tenere tutto come prodotti, parte delle foto non è stata reimportata: da qui i 1.129 404. Il redirect `/gallerie/{slug}/` → prodotto esiste e funziona quando il prodotto c'è. | proprietario del sito + E-015 | active | 2026-07-27 |
 | O-006 | IndexNow è già attivo su fotomoto.click (sorgenti Rank Math + WordPress): 156.200 URL inviati totali, 60 nelle ultime 19 h. Canale di notifica istantanea a Bing/Yandex operativo. | E-013 | active | 2026-07-26 |
 
 ---
@@ -153,6 +224,16 @@ See [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-negotiable).
 - **Evidence:** E-007 *(da registrare in evidence/gsc/)*
 - **Status:** active
 - **Added:** 2026-06-26
+
+---
+
+### O-007
+
+- **Statement:** Contesto storico riferito dal proprietario del sito il 27-07-2026 e verificato per misura lo stesso giorno. Fino al 2025 il sito teneva online come prodotti WooCommerce solo le sessioni più recenti, e archiviava le più vecchie in **gallerie di sola lettura sotto `/gallerie/`**, fuori da WooCommerce. Con la decisione successiva di mantenere tutto come prodotti, una parte delle foto archiviate **non è stata reimportata**. Verifica HTTP: `/gallerie/{slug}/` risponde **301** verso il prodotto quando il prodotto esiste (`…07-09-2025-1-10-13`, `…07-09-2025-18-10-14` → 301, e i rispettivi `/foto/bocca-serriola/{slug}/` → 200) e **404** quando non esiste (`…07-09-2025-292-10-47`, `…09-08-2025-567-11-35` → 404 su entrambi i percorsi). Le landing di sessione 2025 restano invece online (`/foto/bocca-serriola/07-09-2025/` → 200, con 96 link prodotto). I 1.129 404 di F-018 sono quindi **esclusivamente le foto senza successore**, non un difetto di routing. Il 404 servito pesa 139.937 byte.
+- **Evidence:** proprietario del sito; misure in [E-015](../evidence/gsc/E-015_2026-07-27_gsc-ga4-crossread.md) §2
+- **Status:** active
+- **Added:** 2026-07-27
+- **Conseguenza operativa:** il segnale corretto è `410 Gone`, non un redirect. Una regola secca in `.htaccess` sull'intero namespace distruggerebbe i 301 funzionanti — vedi [execution-kit/02-gallerie-410.md](../execution-kit/02-gallerie-410.md).
 
 ---
 

@@ -19,8 +19,11 @@ and the rules in [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-
 | H-002 | Prodotti WooCommerce non pubblicati o non accessibili | **rejected** | 2026-06-26 |
 | H-003 | Errore di canonical URL o Schema markup | **rejected** | 2026-06-26 |
 | H-004 | `lastmod` Rank Math errato o incoerente con il DB | **rejected** | 2026-06-26 |
-| H-005 | Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google | **rejected** | 2026-07-26 |
+| H-005 | Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google | **riaperta** → superata da H-007 | 2026-07-27 |
 | H-006 | Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google | **rejected** (header fixato, problema persiste) | 2026-07-27 |
+| H-007 | Il fetcher sitemap di Search Console non è il Googlebot verificato e riceve il 403 della regola anti-datacenter | **rejected** (nessun fetch di Google raggiunge l'origine, né bloccato né riuscito) | 2026-07-27 |
+| H-009 | Google non richiede più le sitemap di questa proprietà: lo stato GSC è persistito, non è l'esito di una lettura | **testing** | 2026-07-27 |
+| H-008 | Il crawler di Meta è bloccato dalle Regole gestite Cloudflare, e questo spiega lo stato del dataset pixel | **open** | 2026-07-27 |
 
 Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 
@@ -86,9 +89,10 @@ Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 
 ### H-005 — Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google
 
-- **Status:** rejected
+- **Status:** **riaperta il 27-07-2026, superata da [H-007](#h-007--il-fetcher-sitemap-di-search-console-non-è-il-googlebot-verificato-e-riceve-il-403-della-regola-anti-datacenter)**
 - **Created:** 2026-07-26
-- **Last updated:** 2026-07-26
+- **Last updated:** 2026-07-27
+- **Motivo della riapertura:** la rigetto poggiava sull'assunto che il 403 su IP datacenter non potesse riguardare alcun client di Google. F-016 dimostra che la regola 403 è attiva ancora oggi; F-017 esclude le spiegazioni alternative. L'assunto regge per il Googlebot verificato, non per il fetcher sitemap di GSC. L'ipotesi è quindi corretta nella sostanza e imprecisa nella formulazione: la riformulazione è H-007.
 - **Statement:** Il "Impossibile recuperare" sulle sitemap era causato da una regola bot/WAF (Cloudflare) che restituiva 403 al fetcher di Google, impedendogli di leggere le sitemap.
 - **Supporting evidence:** solo il 403 osservato dal fetcher in cloud in sessioni precedenti — spiegato da F-014 come challenge Cloudflare su IP datacenter non verificato.
 - **Falsifying evidence:** F-012 (Googlebot recupera l'HTML in tempo reale via GSC live test; curl UA Googlebot → 200), F-013 (Bing legge la stessa sitemap con Success, 58.400 URL), F-014 (il 403 era IP-datacenter, non applicabile al Googlebot verificato).
@@ -109,3 +113,46 @@ Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 - **Test plan:** Eseguito (E-014). Header rigettato come causa.
 - **Related:** F-012, F-013, F-014, F-015, E-013, E-014, H-007
 - **Notes:** Fix header comunque acquisito e utile. Anche Cloudflare escluso (problema antecedente a CF). Causa "Impossibile leggere" ancora da individuare — vedi E-014 §direzioni non esplorate.
+
+---
+
+### H-007 — Il fetcher sitemap di Search Console non è il Googlebot verificato e riceve il 403 della regola anti-datacenter
+
+- **Status:** **rejected (27-07-2026)** — falsificata da F-021: nessuna richiesta di Google alle sitemap raggiunge l'origine, né bloccata né riuscita. Non c'è nulla da bloccare. Sostituita da H-009.
+- **Created:** 2026-07-27
+- **Last updated:** 2026-07-27
+- **Esito del test:** Cloudflare Security Events, ultime 24 ore, filtro `ASN di origine = AS15169`: **nessun evento**. Nella finestra dei due invii sitemap del 27/07 Cloudflare non ha mitigato alcuna richiesta di Google. Il vettore Cloudflare è escluso. Il 403 di F-016 non compare fra gli eventi di mitigazione, quindi è verosimilmente generato **dall'origine** (LiteSpeed / plugin di sicurezza / ModSecurity sul VPS). Prossimo punto di osservazione: access log del server di origine filtrato su `/sitemap*.xml`. Da verificare anche l'alternativa che "Ultima lettura 27/07" sia il timestamp dell'invio e non di un fetch eseguito.
+- **Statement:** Sul sito è attiva una regola che restituisce **403 Forbidden** ai client su IP datacenter, con `robots.txt` in eccezione (F-016). Il crawl delle pagine HTML non ne risente perché avviene tramite il **Googlebot verificato**, riconosciuto per reverse DNS e lasciato passare (F-012, 37.003 richieste con 82% di 200). Il recupero delle sitemap avviato da Search Console viene invece eseguito da un client che **non supera la stessa verifica**, ricade nella regola e riceve 403 — che GSC riporta come "Impossibile recuperare / Impossibile leggere".
+- **Supporting evidence:** F-016 (403 da datacenter su `/` e `sitemap.xml`, 200 su `robots.txt`, riprodotto il 27/07); F-017 (un URL sitemap vergine fallisce identicamente e istantaneamente → non è uno stato bloccato lato GSC); F-013 (Bing legge lo stesso file: il contenuto è sano); F-015 (header corretto: non è l'header); E-015 §1 (nessun difetto di trasporto, formato o encoding misurabile; 3 fallimenti di rete su 37.003 richieste in 90 giorni).
+- **Falsifying evidence:** nessuna finora.
+- **Test plan:** Cloudflare → Security Events (o log LiteSpeed) filtrati su richieste a `/sitemap*.xml` da IP Google (ASN 15169) nella finestra dei due invii GSC del 27-07-2026, che hanno timestamp noto. Se compare un blocco/challenge → confermata; si procede con una regola di bypass sui path sitemap e si rinvia. Se non compare nulla → falsificata, e il vettore successivo è cosa esattamente riceve il fetcher (log applicativo lato origine).
+- **Related:** F-012, F-013, F-015, F-016, F-017, E-013, E-014, E-015, H-005
+- **Notes:** Supera H-005, la cui rigetto poggiava sull'assunto che il 403 su IP datacenter non potesse riguardare **alcun** client di Google. L'assunto vale per Googlebot verificato, non necessariamente per il fetcher sitemap di GSC. Da qui la riapertura. **Aggiornamento 27/07 sera:** il vettore Cloudflare è escluso dai log; l'ipotesi va riformulata sull'origine prima di essere ritestata.
+
+---
+
+### H-009 — Google non richiede più le sitemap di questa proprietà: lo stato GSC è persistito, non è l'esito di una lettura
+
+- **Status:** testing
+- **Created:** 2026-07-27
+- **Last updated:** 2026-07-27
+- **Statement:** Googlebot crawla il sito normalmente e senza ostacoli, ma **non emette alcuna richiesta verso le sitemap** (F-021). Lo stato "Impossibile recuperare / Impossibile leggere" mostrato da GSC è quindi uno stato **persistito** da fallimenti passati — plausibilmente il periodo in cui il file era servito con `no-store, private` e cache Rank Math stale (F-014, F-011) — dopo il quale Google ha smesso di ritentare. Il campo "Ultima lettura" riflette la registrazione dell'invio, non un fetch. Ne consegue che il fix dell'header (F-015) era corretto ma inefficace: non c'era nessuna lettura da correggere.
+- **Supporting evidence:** F-021 (0 richieste Google alle sitemap in 9 giorni; Bing 70-263/giorno; Googlebot attivo con 587 risposte 200 e nessun 403; Cloudflare non cacha le sitemap); F-022 (l'unico "controllo su URL vergine" tentato era un 301, quindi non concludente); F-013 (Bing legge lo stesso file); F-015 (header corretto senza effetto).
+- **Falsifying evidence:** comparirebbe una richiesta da `66.249.*` verso una sitemap nel watch sul log, a fronte di un invio in GSC.
+- **Test plan:** [execution-kit/01-sitemap-alias-test.md](../execution-kit/01-sitemap-alias-test.md). Esporre l'index su un URL mai visto da Google che risponda **200 diretto** (`/sitemap-fmc.xml`, rewrite interno), avviare il watch sull'access log, inviare l'URL in GSC, leggere l'esito a 24-48 h. Tre esiti possibili e loro interpretazione nella tabella in fondo a quel documento.
+- **Related:** F-011, F-013, F-014, F-015, F-021, F-022, E-013, E-014, E-015, H-005, H-006, H-007
+- **Notes:** Se confermata, chiude una catena di quattro ipotesi (H-005, H-006, H-007 e l'ipotesi WAF dell'audit del 26/07) che cercavano tutte un ostacolo dove non c'era traffico da ostacolare. Nota di priorità: senza alcuna sitemap letta Google indicizza comunque 4.822 pagine e porta 9.960 clic in 3 mesi — la sitemap non è la leva principale.
+
+---
+
+### H-008 — Il crawler di Meta è bloccato dalle Regole gestite Cloudflare, e questo spiega lo stato del dataset pixel
+
+- **Status:** open
+- **Created:** 2026-07-27
+- **Last updated:** 2026-07-27
+- **Statement:** Le Regole gestite Cloudflare bloccano richieste provenienti da `2a03:2880::/32`, che è lo spazio di indirizzi di Meta/Facebook: 3 blocchi osservati nelle ultime 24 ore (06:22:59, 07:34:34, 08:23:15 CEST). Se il crawler di Meta non raggiunge il sito, Meta non può verificare il dominio né associarlo al dataset — coerente con quanto mostra Gestione eventi per il pixel `636147212576293`: "Nessun sito web trovato", nessuna integrazione, configurazione al 33%.
+- **Supporting evidence:** E-015 §1-ter (log dei blocchi), E-015 §6-bis (stato del dataset).
+- **Falsifying evidence:** nessuna finora. Da notare che i blocchi osservati potrebbero riguardare lo scraper dei link condivisi e non il crawler di verifica del dominio: la correlazione non è ancora causalità.
+- **Test plan:** (1) scheda "Testa gli eventi" del dataset + caricamento del sito, per stabilire se il pixel riceve eventi in tempo reale — separa "pixel morto" da "visibilità parziale del portfolio"; (2) Meta Business → Verifica del dominio, per vedere se la verifica fallisce; (3) se confermata, valutare una regola di skip Cloudflare per gli IP di Meta.
+- **Related:** F-016, E-015, H-007
+- **Notes:** Ha impatto diretto sulle campagne Paid Social, non sulla SEO. Va trattata nel workstream misurazione (Fase 0 del piano operativo), non nel P0 sitemap.
