@@ -80,6 +80,62 @@ sta bloccando e c'è un problema di conformità, non di misurazione.
 | 3 | **Conversions API server-side** da WooCommerce | anche riparato, il pixel resta legato al consenso. Misurato il 26/07: GA4 cattura l'80% degli ordini e l'85% del ricavo, ma solo l'8,6% delle pagine e il 16% dei client. Gli eventi che partono dal server non dipendono dal browser. |
 | 4 | Rimuovere i residui di Iubenda e rivedere il banner | 16% di accettazione stimata. Da fare **dopo** la correzione, altrimenti ogni misura sul consenso è rumore. |
 
+---
+
+## ESITO — il dataset era il problema, non il codice (27-07-2026, sera)
+
+Corretta la marcatura, il pixel **continuava a non trasmettere**. Misure convergenti sulla
+pagina prodotto, a consenso marketing concesso:
+
+| Misura | Risultato |
+|---|---|
+| Script attivati da Complianz | ✅ zero `type="text/plain"` residui |
+| `fbq('init')` eseguito | ✅ pixel in `fbq.getState().pixels` |
+| Config scaricata da Meta | ✅ `connect.facebook.net/signals/config/636147212576293` |
+| `fbq('track', …)` | ❌ accodato, `eventCount` 0 |
+| `fbq.callMethod('track', …)` diretto | ❌ accodato, nessun beacon a `facebook.com/tr` |
+| Meta Pixel Helper | ⚠ "installato ma non si è attivato di recente — nessun evento registrato" |
+
+→ L'implementazione lato sito era corretta: era **fbevents.js a trattenere gli eventi**.
+
+**Cause a monte, trovate in Meta Business:**
+- `fotomoto.click` **non era un dominio verificato** (nessun dominio nel portfolio)
+- il dataset `636147212576293` era classificato **"App mobile"** con "Siti web: Nessun sito web trovato"
+- la sua scheda Impostazioni restituiva `Ops! Si è verificato un errore` → il portfolio non ne
+  aveva pieno controllo
+- configurazione ferma al 33%
+
+**Interventi:**
+1. Dominio `fotomoto.click` **verificato** via meta tag (Rank Math → Strumenti per i webmaster →
+   Tag per webmaster personalizzati). La sola verifica **non** ha sbloccato il pixel: ritestato,
+   `eventCount` ancora 0.
+2. Creato un nuovo dataset **di tipo Web**, `FotoMoto.Click Web`, ID **1910886889606030**, nel
+   portfolio che possiede il dominio, collegato all'account pubblicitario `1245117147316812`.
+3. Cambiato `$pixel_id` nello snippet.
+
+**Verifica finale — Meta Pixel Helper su pagina prodotto:**
+
+```
+Pixel di Meta — ID: 1910886889606030
+  ViewContent  ● Attivo
+  PageView     ● Attivo
+  AddToCart    ● Attivo
+```
+
+**Prova controfattuale:** stesso codice, stessa pagina, stesso browser, stesso consenso —
+cambia solo il dataset e gli eventi partono. Il problema era l'asset lato Meta, non
+l'implementazione.
+
+**Da verificare:** nell'elenco del Pixel Helper `ViewContent` e `PageView` comparivano due
+volte. Probabilmente due caricamenti di pagina, ma se fossero due invii per singola
+visualizzazione ci sarebbe doppio conteggio. Controllare su un caricamento pulito.
+
+**Aperto:** ripuntare i 2 gruppi di inserzioni sul nuovo dataset; Conversions API;
+`InitiateCheckout`, evento `Search` sul finder, evento sul pulsante Premium; archiviare il
+vecchio pixel e i due `old_test`.
+
+---
+
 ## Nota di metodo
 
 Questo difetto era invisibile a ogni controllo fatto finora: il codice del pixel è corretto,
