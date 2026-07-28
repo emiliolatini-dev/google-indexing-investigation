@@ -22,7 +22,7 @@ and the rules in [CONTRIBUTING.md §1](../CONTRIBUTING.md#1-epistemic-rules-non-
 | H-005 | Un filtro bot (WAF/Cloudflare) blocca il fetcher sitemap di Google | **riaperta** → superata da H-007 | 2026-07-27 |
 | H-006 | Header `no-store, private` + stato stale causano il fallimento lettura sitemap lato Google | **rejected** (header fixato, problema persiste) | 2026-07-27 |
 | H-007 | Il fetcher sitemap di Search Console non è il Googlebot verificato e riceve il 403 della regola anti-datacenter | **rejected** (nessun fetch di Google raggiunge l'origine, né bloccato né riuscito) | 2026-07-27 |
-| H-009 | Google non richiede più le sitemap di questa proprietà: lo stato GSC è persistito, non è l'esito di una lettura | **testing** | 2026-07-27 |
+| H-009 | Google non richiede più le sitemap di questa proprietà: lo stato GSC è persistito, non è l'esito di una lettura | **supported** (test eseguito, esito negativo su URL vergine) | 2026-07-28 |
 | H-008 | Il crawler di Meta è bloccato dalle Regole gestite Cloudflare, e questo spiega lo stato del dataset pixel | **open** | 2026-07-27 |
 
 Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
@@ -133,9 +133,11 @@ Status values: `open` · `testing` · `supported` · `rejected` · `superseded`.
 
 ### H-009 — Google non richiede più le sitemap di questa proprietà: lo stato GSC è persistito, non è l'esito di una lettura
 
-- **Status:** testing
+- **Status:** **supported** — test eseguito, esito negativo su URL vergine
 - **Created:** 2026-07-27
-- **Last updated:** 2026-07-27
+- **Last updated:** 2026-07-28
+- **ESITO DEL TEST (28-07-2026):** l'index è stato esposto su `/sitemap-fmc.xml` (URL mai visto da Google, 200 diretto, 244 voci verificate) e inviato in GSC il 27/07 verso le 11:00 CEST. A ~24 ore di distanza, l'access log dell'origine registra **zero richieste di Google a qualunque sitemap**: il file del watch è vuoto e la ricerca su tutti i log disponibili (18-28 luglio) restituisce sempre e solo le **4 richieste `Google-InspectionTool` del 26/07 19:27**, quelle generate a mano dal test URL Inspection. Nessun fetch da Googlebot, né sull'URL nuovo né su quello storico. → **Non è uno stato bloccato su una singola voce sitemap: Google non interroga affatto le sitemap di questa proprietà.**
+- **Conseguenza operativa:** le sitemap **escono dalla lista delle leve** su cui investire tempo. Restano corrette e servite bene (Bing le usa: Success, 58.400 URL), ma per Google la scoperta passa da altro — link interni e crawl spontaneo, che funzionano: 4.822 pagine indicizzate e 9.960 clic in 3 mesi **senza** che una sitemap sia mai stata letta. Se si vuole insistere, l'unica strada rimasta è la segnalazione al supporto Google; non è un problema risolvibile lato sito.
 - **Statement:** Googlebot crawla il sito normalmente e senza ostacoli, ma **non emette alcuna richiesta verso le sitemap** (F-021). Lo stato "Impossibile recuperare / Impossibile leggere" mostrato da GSC è quindi uno stato **persistito** da fallimenti passati — plausibilmente il periodo in cui il file era servito con `no-store, private` e cache Rank Math stale (F-014, F-011) — dopo il quale Google ha smesso di ritentare. Il campo "Ultima lettura" riflette la registrazione dell'invio, non un fetch. Ne consegue che il fix dell'header (F-015) era corretto ma inefficace: non c'era nessuna lettura da correggere.
 - **Supporting evidence:** F-021 (0 richieste Google alle sitemap in 9 giorni; Bing 70-263/giorno; Googlebot attivo con 587 risposte 200 e nessun 403; Cloudflare non cacha le sitemap); F-022 (l'unico "controllo su URL vergine" tentato era un 301, quindi non concludente); F-013 (Bing legge lo stesso file); F-015 (header corretto senza effetto).
 - **Falsifying evidence:** comparirebbe una richiesta da `66.249.*` verso una sitemap nel watch sul log, a fronte di un invio in GSC.
